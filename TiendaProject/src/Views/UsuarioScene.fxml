@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="733.0" prefWidth="1070.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UsuarioController">
+<AnchorPane fx:id="anchorPaneMain" prefHeight="733.0" prefWidth="1070.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UsuarioController">
    <children>
       <Pane layoutY="42.0" prefHeight="121.0" prefWidth="1070.0" style="-fx-background-color: #9229f5">
          <children>
@@ -35,7 +35,7 @@
           <RowConstraints maxHeight="322.0" minHeight="10.0" prefHeight="321.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="tableUser" prefHeight="326.0" prefWidth="677.0" stylesheets="@../Styles/tableView.css" GridPane.rowIndex="1">
+            <TableView fx:id="tableUser" onContextMenuRequested="#setImageView" onMouseClicked="#setImageView" prefHeight="326.0" prefWidth="677.0" stylesheets="@../Styles/tableView.css" GridPane.rowIndex="1">
               <columns>
                 <TableColumn fx:id="IdColumn" prefWidth="75.0" text="Carnet" />
                 <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Nombre" />
@@ -91,5 +91,7 @@
                </ImageView>
            </graphic>
        </Button>
+      <Button layoutX="44.0" layoutY="656.0" mnemonicParsing="false" onAction="#editUser" prefHeight="25.0" prefWidth="95.0" styleClass="buttonUser" stylesheets="@../Styles/button.css" text="Editar" />
+      <Button layoutX="151.0" layoutY="656.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="25.0" prefWidth="95.0" styleClass="buttonUser" stylesheets="@../Styles/button.css" text="Eliminar" />
    </children>
 </AnchorPane>
