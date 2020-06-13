@@ -39,9 +39,9 @@ public class ControllerMain implements Initializable {
 
     public void ToUserScene(ActionEvent event) throws IOException {
 
-            Node child = FXMLLoader.load(getClass().getResource("/Views/UsuarioScene.fxml"));
-            pnlTemp.getChildren().clear();
-            pnlTemp.getChildren().add(child);
+        Node child = FXMLLoader.load(getClass().getResource("/Views/UsuarioScene.fxml"));
+        pnlTemp.getChildren().clear();
+        pnlTemp.getChildren().add(child);
 
     }
 }
