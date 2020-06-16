@@ -10,8 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -23,6 +25,8 @@ public class RegisterUIController implements Initializable {
     private TextField txtEmail,txtUsername,txtFoto,txtApellido,txtNombre,txtCedula;
     @FXML
     private PasswordField txtPassword;
+
+    private Pane pnlTemp;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,7 +49,6 @@ public class RegisterUIController implements Initializable {
     }
 
     public void editEmpleado(Usuario user){
-
 
     }
 
