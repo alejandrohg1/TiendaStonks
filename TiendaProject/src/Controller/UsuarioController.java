@@ -145,7 +145,55 @@ public class UsuarioController implements Initializable {
         stage.show();
     }
 
+<<<<<<< Updated upstream
     public static void saveUser(Usuario user){
+=======
+    public  void saveUser(Usuario user){
+        usuarioObservableList.add(user);
+        addToGson(usuarioObservableList);
+
+    }
+
+    public void loadData(){
+        tableUser.setItems(usuarioObservableList);
+    }
+
+
+    public void setImageView(MouseEvent event) {
+       String foto = tableUser.getSelectionModel().getSelectedItem().getFotoUrl();
+        userImage.setImage(new Image(foto));
+
+    }
+
+
+    public void editUser(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Views/EditUser.fxml"));
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(anchorPaneMain.getScene().getWindow());
+        dialog.setTitle("Edit Contact");
+        dialog.getDialogPane().setContent(loader.load());
+        //dialog.initStyle(StageStyle.UNIFIED);
+
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        EditController editController = loader.getController();
+        editController.initData(tableUser.getSelectionModel().getSelectedItem());
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            editController.setUser(tableUser.getSelectionModel().getSelectedItem());
+            updateContact();
+        }
+
+        tableUser.refresh();
+
+
+    }
+
+
+>>>>>>> Stashed changes
 
 
     }

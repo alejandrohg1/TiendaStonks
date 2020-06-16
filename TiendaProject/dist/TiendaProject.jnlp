@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="TiendaProject.jnlp">
+  <information>
+    <title>TiendaProject</title>
+    <vendor>Yiin Anton</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="TiendaProject.jar" size="202682" download="eager" />
+    <jar href="lib\AnimateFX-1.2.1.jar" size="94267" download="eager" />
+    <jar href="lib\gson-2.8.2.jar" size="232932" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="800" height="600" main-class="Main.Main"  name="TiendaProject" />
+  <update check="always"/>
+</jnlp>

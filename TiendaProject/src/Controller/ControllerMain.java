@@ -13,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,6 +41,14 @@ public class ControllerMain implements Initializable {
             Node child = FXMLLoader.load(getClass().getResource("/Views/UsuarioScene.fxml"));
             pnlTemp.getChildren().clear();
             pnlTemp.getChildren().add(child);
+
+    }
+    
+    public void ToProductoScene(ActionEvent event) throws IOException {
+
+        Node child = FXMLLoader.load(getClass().getResource("/Views/ProductoScene.fxml"));
+        pnlTemp.getChildren().clear();
+        pnlTemp.getChildren().add(child);
 
     }
 }
