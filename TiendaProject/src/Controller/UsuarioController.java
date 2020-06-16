@@ -46,7 +46,10 @@ public class UsuarioController implements Initializable {
     private TableColumn<Usuario,String> emailColumn;
     @FXML
     private AnchorPane anchorPaneMain;
+    @FXML
+    public Label lblWelcome;
 
+    public static String name;
     public  static ObservableList<Usuario> usuarioObservableList;
 
 
@@ -57,6 +60,7 @@ public class UsuarioController implements Initializable {
             loadFromGson();
             starColumns();
             loadData();
+            lblWelcome.setText(name);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -172,7 +176,6 @@ public class UsuarioController implements Initializable {
         dialog.initOwner(anchorPaneMain.getScene().getWindow());
         dialog.setTitle("Edit Contact");
         dialog.getDialogPane().setContent(loader.load());
-        dialog.initStyle(StageStyle.UNIFIED);
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
@@ -210,5 +213,9 @@ public class UsuarioController implements Initializable {
             updateContact();
         }
 
+    }
+
+    public void setLblWelcome(String username) {
+        name = username;
     }
 }
