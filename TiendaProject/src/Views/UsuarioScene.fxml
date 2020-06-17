@@ -50,8 +50,8 @@
             </TableView>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TextField id="text-fieldUser" layoutX="14.0" layoutY="16.0" prefHeight="25.0" prefWidth="260.0" stylesheets="@../Styles/textfield.css" />
-                  <Button id="buttonBuscar" layoutX="287.0" layoutY="16.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="48.0" stylesheets="@../Styles/button.css">
+                  <TextField id="text-fieldUser" fx:id="txtBuscar" layoutX="14.0" layoutY="16.0" onMousePressed="#populateTable" prefHeight="25.0" prefWidth="260.0" promptText="Buscar....." stylesheets="@../Styles/textfield.css" />
+                  <Button id="buttonBuscar" layoutX="287.0" layoutY="16.0" mnemonicParsing="false" onAction="#findName" prefHeight="36.0" prefWidth="48.0" stylesheets="@../Styles/button.css">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -91,7 +91,7 @@
                </ImageView>
            </graphic>
        </Button>
-      <Button layoutX="44.0" layoutY="656.0" mnemonicParsing="false" onAction="#editUser" prefHeight="25.0" prefWidth="95.0" styleClass="buttonUser" stylesheets="@../Styles/button.css" text="Editar" />
-      <Button layoutX="151.0" layoutY="656.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="25.0" prefWidth="95.0" styleClass="buttonUser" stylesheets="@../Styles/button.css" text="Eliminar" />
+      <Button fx:id="btnEditar" layoutX="44.0" layoutY="656.0" mnemonicParsing="false" onAction="#editUser" prefHeight="25.0" prefWidth="95.0" styleClass="buttonUser" stylesheets="@../Styles/button.css" text="Editar" />
+      <Button fx:id="btnEliminar" layoutX="151.0" layoutY="656.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="25.0" prefWidth="95.0" styleClass="buttonUser" stylesheets="@../Styles/button.css" text="Eliminar" />
    </children>
 </AnchorPane>

@@ -37,14 +37,14 @@
                   <Font name="Arial" size="12.0" />
                </font>
             </Label>
-            <TextField id="text-field" fx:id="txtUsername" layoutX="28.0" layoutY="29.0" onMouseClicked="#clearText" prefHeight="25.0" prefWidth="301.0" stylesheets="@../Styles/textfield.css" text="admin" />
+            <TextField id="text-field" fx:id="txtUsername" layoutX="28.0" layoutY="29.0" onMouseClicked="#clearText" prefHeight="25.0" prefWidth="301.0" stylesheets="@../Styles/textfield.css" text="Rebeca" />
             <Label fx:id="errorName" layoutX="28.0" layoutY="59.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="409.0" layoutY="266.0" prefHeight="83.0" prefWidth="397.0">
          <children>
             <Label layoutX="31.0" text="PASSWORD" textFill="#c5c5c5" />
-            <PasswordField id="text-field" fx:id="txtPassword" layoutX="31.0" layoutY="21.0" onMouseClicked="#clearText2" prefHeight="25.0" prefWidth="301.0" stylesheets="@../Styles/textfield.css" text="123" />
+            <PasswordField id="text-field" fx:id="txtPassword" layoutX="31.0" layoutY="21.0" onMouseClicked="#clearText2" prefHeight="25.0" prefWidth="301.0" stylesheets="@../Styles/textfield.css" text="1234" />
             <Label fx:id="errorLabel" layoutX="31.0" layoutY="59.0" />
          </children>
       </AnchorPane>

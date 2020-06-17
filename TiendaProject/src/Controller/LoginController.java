@@ -52,6 +52,7 @@ public class LoginController implements Initializable {
         loadFromGson();
     }
 
+    //cerrar stage
     public void closePane(javafx.event.ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
@@ -62,7 +63,7 @@ public class LoginController implements Initializable {
         String password = txtPassword.getText();
         boolean flagIntro = false;
         int countUser = 0, countPassword = 0, countBoth = 0;
-
+        //validaciones del login
         for (Usuario u : usuarioObservableList) {
             if (u.getUsername().equals(name) && u.getPassword().equals(password)) {
                 flagIntro = true;
@@ -99,7 +100,7 @@ public class LoginController implements Initializable {
             errorLabel.setStyle("-fx-text-fill: red");
             errorLabel.setText("Password is incorrect");
         }
-
+        //abre stage del main
         if (flagIntro) {
             ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/MainMenu.fxml"));
@@ -111,21 +112,21 @@ public class LoginController implements Initializable {
             stage.show();
             new SlideInDown(root).play();
         }
-
+        //pasa el nombre del usuario al main
         UsuarioController controller = new UsuarioController();
         controller.setLblWelcome(name);
 
 
 
     }
-
+    //limpia campos de textos
     public void clearText(MouseEvent event) { errorName.setText(""); }
     public void clearText2(MouseEvent event) { errorLabel.setText(""); }
 
     public void setTime(MouseEvent event) {
 
     }
-
+    //carga del gson
     public  void loadFromGson() {
         Gson gson = new Gson();
         usuarioObservableList = FXCollections.observableArrayList();
@@ -138,23 +139,6 @@ public class LoginController implements Initializable {
 
     }
 
-//      if(!name.equals("admin") || name.isEmpty()){
-//        if(name.isEmpty()){
-//            errorName.setStyle("-fx-text-fill: red");
-////            errorName.setText("Field id empty");
-//        }else{
-//            errorName.setStyle("-fx-text-fill: red");
-//            errorName.setText("Username is incorrect");
-//        }
-//    }else if (!password.equals("123") || password.isEmpty()){
-//        if(password.isEmpty()){
-//            errorLabel.setStyle("-fx-text-fill: red");
-//            errorLabel.setText("Field is empty");
-//        }else{
-//            errorLabel.setStyle("-fx-text-fill: red");
-//            errorLabel.setText("Password is incorrect");
-//        }
-//
-//    }else{
+
 
 }

@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,10 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sun.plugin.javascript.navig.Anchor;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -48,6 +47,10 @@ public class UsuarioController implements Initializable {
     private AnchorPane anchorPaneMain;
     @FXML
     public Label lblWelcome;
+    @FXML
+    private TextField txtBuscar;
+    @FXML
+    private Button btnEditar,btnEliminar,buttonRegistrar;
 
     public static String name;
     public  static ObservableList<Usuario> usuarioObservableList;
@@ -66,16 +69,13 @@ public class UsuarioController implements Initializable {
             e.printStackTrace();
         }
 
-        //
-
-
     }
 
-
+    //cerrar ventana
     public void closeWindow(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
-
+    //cargar gson
     public  void loadFromGson() {
         Gson gson = new Gson();
         usuarioObservableList = FXCollections.observableArrayList();
@@ -91,7 +91,7 @@ public class UsuarioController implements Initializable {
     public static ObservableList<Usuario> getUsuarioObservableList() throws FileNotFoundException {
         return usuarioObservableList;
     }
-
+    //inicializar el dato de cada columna a recibir
     public void starColumns() throws FileNotFoundException {
 
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -110,7 +110,7 @@ public class UsuarioController implements Initializable {
 
 
     }
-
+    //añadir al gson
     public  void addToGson(ObservableList<Usuario> newData) {
         FileWriter flw = null;
 
@@ -139,7 +139,7 @@ public class UsuarioController implements Initializable {
         tableUser.setItems(usuarioObservableList);
     }
 
-
+    //abre el stage de registrar empleado
     public void registrarEmpleado(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/RegisterUser.fxml"));
         Parent root = (Parent)fxmlLoader.load();
@@ -150,36 +150,43 @@ public class UsuarioController implements Initializable {
         stage.setTitle("Registrar Usuarios");
         stage.show();
     }
-
+    //guarda usuario y actualiza el gson
     public  void saveUser(Usuario user){
         usuarioObservableList.add(user);
         addToGson(usuarioObservableList);
 
     }
-
+    //carga la lista observable a la tabla
     public void loadData(){
         tableUser.setItems(usuarioObservableList);
     }
 
-
+    //Pone imagen al seleccionar dato de la tabla
     public void setImageView(MouseEvent event) {
-       String foto = tableUser.getSelectionModel().getSelectedItem().getFotoUrl();
-        userImage.setImage(new Image(foto));
+        if(tableUser.getSelectionModel().getSelectedItem()==null){
+            return;
+        }else{
+            String foto = tableUser.getSelectionModel().getSelectedItem().getFotoUrl();
+            userImage.setImage(new Image(foto));
+        }
+
 
     }
 
-
+    //editar usuario
     public void editUser(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Views/EditUser.fxml"));
+        //crea un dialog
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(anchorPaneMain.getScene().getWindow());
         dialog.setTitle("Edit Contact");
+        //carga el fxml de edit
         dialog.getDialogPane().setContent(loader.load());
-
+        //crea boton ok y cancelar
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-
+        //llama al controlador editController
         EditController editController = loader.getController();
         editController.initData(tableUser.getSelectionModel().getSelectedItem());
 
@@ -199,12 +206,12 @@ public class UsuarioController implements Initializable {
     public TableView<Usuario> getTableUser() {
         return tableUser;
     }
-
+    //actualizar el gson
     public void updateContact(){
         addToGson(usuarioObservableList);
     }
 
-
+    //borra usuario y actualiza gson
     public void deleteUser(ActionEvent event) {
         if(tableUser.getSelectionModel().getSelectedItem()==null){
             return;
@@ -214,8 +221,35 @@ public class UsuarioController implements Initializable {
         }
 
     }
-
+    //pone en la etiqueta username el nombre del usuario
     public void setLblWelcome(String username) {
         name = username;
     }
+    //busca en la tabla el escrito en el texfield
+    public void findName(ActionEvent event) {
+
+        String key = txtBuscar.getText();
+        ObservableList tempList = FXCollections.observableArrayList();
+        //crea una nueva lista para agregarla a la table
+
+        for (Usuario u : usuarioObservableList) {
+            if (u.getNombre().equals(key) || u.getApellido().equals(key) || u.getCedula().equals(key) || u.getEmail().equals(key) || u.getRol().equals(key) ) {
+                tempList.add(u);
+            }
+        }
+        //agrega la lista temporal a la tabla
+        tableUser.setItems(tempList);
+        buttonRegistrar.setDisable(true);
+    }
+    //regresa la tabla a su estado inicial
+    public void populateTable(MouseEvent event) throws FileNotFoundException {
+        buttonRegistrar.setDisable(false);
+        btnEditar.setDisable(false);
+        btnEliminar.setDisable(false);
+        loadFromGson();
+        starColumns();
+        loadData();
+    }
+
+
 }

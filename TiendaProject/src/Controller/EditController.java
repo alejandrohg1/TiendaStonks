@@ -36,13 +36,14 @@ public class EditController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //inicializa el combo box
         flag = false;
         ObservableList<String> products = FXCollections.observableArrayList();
         products.addAll("Admin","Cajero","Gerente");
         txtRol.setItems(products);
     }
 
-
+    //inizialar data en los textfields del editController
     public void initData(Usuario user){
         txtEmail.setText(user.getEmail());
         txtNombre.setText(user.getNombre());
@@ -52,7 +53,7 @@ public class EditController implements Initializable {
         txtUsername.setText(user.getUsername());
         txtPassword.setText(user.getPassword());
     }
-
+    //editar usuario seleccionado
     public void setUser(Usuario usuario){
         usuario.setNombre(txtNombre.getText());
         usuario.setApellido(txtApellido.getText());
