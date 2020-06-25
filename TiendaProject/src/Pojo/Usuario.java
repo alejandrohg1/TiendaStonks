@@ -1,7 +1,5 @@
 package Pojo;
 
-import javafx.beans.property.SimpleStringProperty;
-
 public class Usuario {
     private int id;
     private String nombre,apellido,cedula,fotoUrl,rol,email,username,password;
