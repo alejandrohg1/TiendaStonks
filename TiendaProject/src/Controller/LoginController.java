@@ -6,8 +6,6 @@ import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -61,12 +59,18 @@ public class LoginController implements Initializable {
     public void loginAction(ActionEvent event) throws IOException {
         String name = txtUsername.getText();
         String password = txtPassword.getText();
+        String photo = null;
+        String fullname = null;
+        String rol = null;
         boolean flagIntro = false;
         int countUser = 0, countPassword = 0, countBoth = 0;
         //validaciones del login
         for (Usuario u : usuarioObservableList) {
             if (u.getUsername().equals(name) && u.getPassword().equals(password)) {
                 flagIntro = true;
+                photo = u.getFotoUrl();
+                fullname = u.getNombre();
+                rol = u.getRol();
             }
             if (!u.getUsername().equals(name)) {
                 countUser++;
@@ -114,7 +118,7 @@ public class LoginController implements Initializable {
         }
         //pasa el nombre del usuario al main
         UsuarioController controller = new UsuarioController();
-        controller.setLblWelcome(name);
+        controller.setLblWelcome(fullname,photo,rol);
 
 
 

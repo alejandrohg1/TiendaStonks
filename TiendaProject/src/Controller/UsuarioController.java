@@ -1,6 +1,8 @@
 package Controller;
 
 import Pojo.Usuario;
+import animatefx.animation.FadeIn;
+import animatefx.animation.SlideInDown;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,8 +53,12 @@ public class UsuarioController implements Initializable {
     private TextField txtBuscar;
     @FXML
     private Button btnEditar,btnEliminar,buttonRegistrar;
+    @FXML
+    private ImageView imgPerfil;
 
     public static String name;
+    public static String foto;
+    public static String rols;
     public  static ObservableList<Usuario> usuarioObservableList;
 
 
@@ -64,10 +70,18 @@ public class UsuarioController implements Initializable {
             starColumns();
             loadData();
             lblWelcome.setText(name);
+            imgPerfil.setImage(new Image(foto));
+
+            if(!rols.equals("Admin")){
+                btnEliminar.setDisable(true);
+                btnEditar.setDisable(true);
+                buttonRegistrar.setDisable(true);
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -161,6 +175,7 @@ public class UsuarioController implements Initializable {
         tableUser.setItems(usuarioObservableList);
     }
 
+
     //Pone imagen al seleccionar dato de la tabla
     public void setImageView(MouseEvent event) {
         if(tableUser.getSelectionModel().getSelectedItem()==null){
@@ -198,9 +213,7 @@ public class UsuarioController implements Initializable {
 
         tableUser.refresh();
 
-
     }
-
 
 
     public TableView<Usuario> getTableUser() {
@@ -222,8 +235,10 @@ public class UsuarioController implements Initializable {
 
     }
     //pone en la etiqueta username el nombre del usuario
-    public void setLblWelcome(String username) {
+    public void setLblWelcome(String username,String photo,String rol) {
         name = username;
+        foto = photo;
+        rols = rol;
     }
     //busca en la tabla el escrito en el texfield
     public void findName(ActionEvent event) {
@@ -243,13 +258,33 @@ public class UsuarioController implements Initializable {
     }
     //regresa la tabla a su estado inicial
     public void populateTable(MouseEvent event) throws FileNotFoundException {
-        buttonRegistrar.setDisable(false);
-        btnEditar.setDisable(false);
-        btnEliminar.setDisable(false);
+        if(!rols.equals("Admin")){
+            btnEliminar.setDisable(true);
+            btnEditar.setDisable(true);
+            buttonRegistrar.setDisable(true);
+        }else{
+            buttonRegistrar.setDisable(false);
+            btnEditar.setDisable(false);
+            btnEliminar.setDisable(false);
+        }
+
         loadFromGson();
         starColumns();
         loadData();
     }
 
+
+    public void backToLogin(ActionEvent event) throws IOException {
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/Login.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.show();
+        new FadeIn(root).play();
+
+    }
 
 }
