@@ -13,19 +13,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class ProductoData {
-    public static ObservableList<Producto> productos;
+public class ProveedorData {
 
-    public ProductoData() {
+    public static ObservableList<Proveedor> proveedores;
+
+    public ProveedorData() {
         loadFromGson();
     }
 
     public void loadFromGson() {
         Gson gson = new Gson();
-        productos = FXCollections.observableArrayList();
+        proveedores = FXCollections.observableArrayList();
 
         try {
-            productos.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/ProductoData.json"), Producto[].class)));
+            proveedores.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/ProveedorData.json"), Proveedor[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -38,7 +39,7 @@ public class ProductoData {
         Gson gson = new Gson();
 
         try {
-            flw = new FileWriter("./src/resources/Data/ProductoData.json");
+            flw = new FileWriter("./src/resources/Data/ProveedorData.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,4 +54,6 @@ public class ProductoData {
         }
 
     }
+
+
 }
