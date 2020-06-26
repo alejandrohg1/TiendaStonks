@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -25,18 +26,20 @@ public class ControllerMain implements Initializable {
     private Button closeButton;
     @FXML
     private Pane pnlTemp;
+    @FXML
+    private ImageView imageStonks;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-
+    //cerrar ventana
     public void closeWindow(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
 
-
+    //cambiar escena a usuario
     public void ToUserScene(ActionEvent event) throws IOException {
 
         Node child = FXMLLoader.load(getClass().getResource("/Views/UsuarioScene.fxml"));
