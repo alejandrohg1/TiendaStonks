@@ -5,7 +5,7 @@ import java.sql.Struct;
 public class Producto {
 
     private String descripcion;
-    private String Id;
+    private String idProducto;
     private String stock;
     private String fotoUrl;
     private float precio;
@@ -16,9 +16,9 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String descripcion, String id, String stock, String fotoUrl, float precio, String seccion, String idProveedor, Proveedor proveedor) {
+    public Producto(String descripcion, String idProducto, String stock, String fotoUrl, float precio, String seccion, String idProveedor, Proveedor proveedor) {
         this.descripcion = descripcion;
-        Id = id;
+        this.idProducto = idProducto;
         this.stock = stock;
         this.fotoUrl = fotoUrl;
         this.precio = precio;
@@ -35,12 +35,12 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public String getId() {
-        return Id;
+    public String getIdprducto() {
+        return idProducto;
     }
 
-    public void setId(String id) {
-        Id = id;
+    public void setIdprducto(String idprducto) {
+        this.idProducto = idprducto;
     }
 
     public String getStock() {

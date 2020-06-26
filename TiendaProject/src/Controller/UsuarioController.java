@@ -186,8 +186,6 @@ public class UsuarioController implements Initializable {
             String foto = tableUser.getSelectionModel().getSelectedItem().getFotoUrl();
             userImage.setImage(new Image(foto));
         }
-
-
     }
 
     //editar usuario
