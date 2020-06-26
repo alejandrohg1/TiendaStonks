@@ -10,23 +10,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import sun.plugin.javascript.navig.Anchor;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UsuarioController implements Initializable {
     @FXML
@@ -45,19 +44,25 @@ public class UsuarioController implements Initializable {
     private TableColumn<Usuario,String> rolColumn;
     @FXML
     private TableColumn<Usuario,String> emailColumn;
+    @FXML
+    private AnchorPane anchorPaneMain;
 
-    public static ObservableList<Usuario> usuarioObservableList;
+    public  static ObservableList<Usuario> usuarioObservableList;
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            loadFromGson();
             starColumns();
+            loadData();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        //userImage.setImage(new Image("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"));
+        //
 
 
     }
@@ -67,9 +72,9 @@ public class UsuarioController implements Initializable {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
 
-    public  void loadFromGson() throws FileNotFoundException {
+    public  void loadFromGson() {
         Gson gson = new Gson();
-        usuarioObservableList= FXCollections.observableArrayList();
+        usuarioObservableList = FXCollections.observableArrayList();
 
         try {
             usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/usuarios.json"), Usuario[].class)));
@@ -77,11 +82,9 @@ public class UsuarioController implements Initializable {
             e.printStackTrace();
         }
 
-
     }
 
-    public ObservableList<Usuario> getUsuarioObservableList() throws FileNotFoundException {
-        loadFromGson();
+    public static ObservableList<Usuario> getUsuarioObservableList() throws FileNotFoundException {
         return usuarioObservableList;
     }
 
@@ -102,21 +105,20 @@ public class UsuarioController implements Initializable {
         emailColumn.setMinWidth(200);
 
 
-        tableUser.setItems(getUsuarioObservableList());
-
     }
 
-    public static void addToGson(ObservableList<Usuario> newData) {
+    public  void addToGson(ObservableList<Usuario> newData) {
         FileWriter flw = null;
 
         Gson gson = new Gson();
+
         try {
             flw = new FileWriter("./src/resources/Data/usuarios.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-            List<Usuario> jsonArray =  newData;
+            ObservableList<Usuario> jsonArray = newData;
             gson.toJson(jsonArray, flw);
 
         try {
@@ -127,10 +129,10 @@ public class UsuarioController implements Initializable {
 
     }
 
-    public ObservableList<Usuario> listPrueba(){
+    public void listPrueba(){
         usuarioObservableList = FXCollections.observableArrayList();
         usuarioObservableList.add(new Usuario(1,"Alejandro","Hernandez","Cedula","fotoURL","rol","email","username","password"));
-        return usuarioObservableList;
+        tableUser.setItems(usuarioObservableList);
     }
 
 
@@ -145,9 +147,6 @@ public class UsuarioController implements Initializable {
         stage.show();
     }
 
-<<<<<<< Updated upstream
-    public static void saveUser(Usuario user){
-=======
     public  void saveUser(Usuario user){
         usuarioObservableList.add(user);
         addToGson(usuarioObservableList);
@@ -193,10 +192,23 @@ public class UsuarioController implements Initializable {
     }
 
 
->>>>>>> Stashed changes
 
+    public TableView<Usuario> getTableUser() {
+        return tableUser;
+    }
 
+    public void updateContact(){
+        addToGson(usuarioObservableList);
     }
 
 
+    public void deleteUser(ActionEvent event) {
+        if(tableUser.getSelectionModel().getSelectedItem()==null){
+            return;
+        }else{
+            usuarioObservableList.remove(tableUser.getSelectionModel().getSelectedItem());
+            updateContact();
+        }
+
+    }
 }

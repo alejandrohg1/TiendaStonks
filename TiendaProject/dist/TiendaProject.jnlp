@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="TiendaProject.jar" size="202682" download="eager" />
+    <jar href="TiendaProject.jar" size="209928" download="eager" />
     <jar href="lib\AnimateFX-1.2.1.jar" size="94267" download="eager" />
     <jar href="lib\gson-2.8.2.jar" size="232932" download="eager" />
   </resources>

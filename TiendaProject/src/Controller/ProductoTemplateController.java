@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Pojo.Producto;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,10 +13,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -34,11 +37,35 @@ public class ProductoTemplateController implements Initializable {
     private Button btnImage;
     @FXML
     private ImageView imgvProduct;
+    @FXML
+    private Label lblCod;
+    @FXML
+    private Label lblProductName;
+    @FXML
+    private Label lblProductDescription;
+    @FXML
+    private Label lblProductCantidad;
+    @FXML
+    private Label lblProductPrecio;
+    
+    private Producto producto;
+    
 
-    public void setInfoProducto(){
+    public void setInfoProducto(Producto producto){
+        
+        this.producto = producto;
+        if (producto == null) {
+            return;
+        }
+        lblCod.setText("ID Producto: " + producto.getId_producto());
+        lblProductName.setText("ID Proveedor: " + producto.getId_proveedor());
+        lblProductDescription.setText("Descripcion: " + producto.getDescripcion());
+        lblProductCantidad.setText(String.valueOf("Cantidad: " + producto.getStock()));
+        lblProductPrecio.setText("Precio: C$" + producto.getPrecio());
+        
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new URL("/resources/images/iconTienda.png"));            
+            image = ImageIO.read(new URL(producto.getRutaImagen()));            
         } catch (MalformedURLException ex) {
             Logger.getLogger(ProductoTemplateController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
