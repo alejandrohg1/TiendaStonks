@@ -1,6 +1,5 @@
 package DataBase;
 
-import Pojo.Producto;
 import Pojo.Proveedor;
 import Pojo.Usuario;
 import com.google.gson.Gson;
@@ -33,7 +32,7 @@ public class ProveedorData {
 
     }
 
-    public  void addToGson(ObservableList<Usuario> newData) {
+    public void addToGson(ObservableList<Usuario> newData) {
         FileWriter flw = null;
 
         Gson gson = new Gson();

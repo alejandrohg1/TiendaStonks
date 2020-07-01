@@ -1,7 +1,6 @@
 package DataBase;
 
 import Pojo.Producto;
-import Pojo.Proveedor;
 import Pojo.Usuario;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
@@ -32,7 +31,7 @@ public class ProductoData {
 
     }
 
-    public  void addToGson(ObservableList<Usuario> newData) {
+    public void addToGson(ObservableList<Usuario> newData) {
         FileWriter flw = null;
 
         Gson gson = new Gson();

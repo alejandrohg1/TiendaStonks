@@ -2,7 +2,7 @@ package Pojo;
 
 public class Usuario {
     private int id;
-    private String nombre,apellido,cedula,fotoUrl,rol,email,username,password;
+    private String nombre, apellido, cedula, fotoUrl, rol, email, username, password;
 
     public Usuario(int id, String nombre, String apellido, String cedula, String fotoUrl, String rol, String email, String username, String password) {
         this.id = id;

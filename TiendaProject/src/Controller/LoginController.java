@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 
-
 public class LoginController implements Initializable {
     @FXML
     private Label errorName;
@@ -50,7 +49,7 @@ public class LoginController implements Initializable {
 
     //cerrar stage
     public void closePane(javafx.event.ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 
 
@@ -116,31 +115,36 @@ public class LoginController implements Initializable {
         }
         //pasa el nombre del usuario al main
         UsuarioController controller = new UsuarioController();
-        controller.setLblWelcome(fullname,photo,rol);
-
+        controller.setLblWelcome(fullname, photo, rol);
 
 
     }
+
     //limpia campos de textos
-    public void clearText(MouseEvent event) { errorName.setText(""); }
-    public void clearText2(MouseEvent event) { errorLabel.setText(""); }
+    public void clearText(MouseEvent event) {
+        errorName.setText("");
+    }
+
+    public void clearText2(MouseEvent event) {
+        errorLabel.setText("");
+    }
 
     public void setTime(MouseEvent event) {
 
     }
+
     //carga del gson
-    public  void loadFromGson() {
+    public void loadFromGson() {
         Gson gson = new Gson();
         usuarioObservableList = FXCollections.observableArrayList();
 
         try {
-            usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/usuarios.json"), Usuario[].class)));
+            usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/usuarios.json").getPath()), Usuario[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
     }
-
 
 
 }
