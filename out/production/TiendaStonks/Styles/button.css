@@ -1,19 +1,19 @@
-#windows{
+#windows {
     -fx-text-fill: white;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
-    -fx-border-color:#168FC1;
-    -fx-background-color:#168FC1;
+    -fx-border-color: #168FC1;
+    -fx-background-color: #168FC1;
 }
 
-#windows:hover{
-    -fx-background-color:#0B729C;
-    -fx-text-fill:white;
-    -fx-font-weight:bold;
-    -fx-border-color:#168FC1;
+#windows:hover {
+    -fx-background-color: #0B729C;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: #168FC1;
 }
 
-#buttonMenu{
+#buttonMenu {
     -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-font-weight: normal;
@@ -21,34 +21,36 @@
     -fx-cursor: hand;
 }
 
-#buttonMenu:hover{
+#buttonMenu:hover {
     -fx-background-color: #7561e6;
-    -fx-text-fill:white;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-border-color:#7561e6;
+    -fx-border-color: #7561e6;
     -fx-font-size: 15;
     -fx-cursor: hand;
 }
 
-.button1{
+.button1 {
     -fx-background-color: #6f4cbb;
     -fx-text-fill: white;
     -fx-cursor: hand;
 }
 
-.button1:hover{
+.button1:hover {
     -fx-text-fill: #431fa0;
     -fx-cursor: hand;
 }
-.button1:pressed{
+
+.button1:pressed {
     -fx-text-fill: #371897;
     -fx-cursor: hand;
 }
 
-.linear-grad{
-    -fx-background-color: linear-gradient(to bottom left,#6f4cbb,#431fa0);
+.linear-grad {
+    -fx-background-color: linear-gradient(to bottom left, #6f4cbb, #431fa0);
 }
-.buttonUser{
+
+.buttonUser {
     -fx-background-color: #9229f5;
     -fx-text-fill: white;
     -fx-font-weight: normal;
@@ -56,7 +58,7 @@
     -fx-cursor: hand;
 }
 
-.buttonUser:hover{
+.buttonUser:hover {
     -fx-background-color: #6f4cbb;
     -fx-text-fill: white;
     -fx-font-weight: normal;
@@ -64,20 +66,21 @@
     -fx-cursor: hand;
 }
 
-#buttonBuscar{
+#buttonBuscar {
     -fx-cursor: hand;
     -fx-background-color: transparent;
 }
-#buttonBuscar:hover{
+
+#buttonBuscar:hover {
     -fx-background-color: transparent;
     -fx-cursor: hand;
 }
 
-.table-view{
+.table-view {
     -fx-background-color: #6f4cbb;
 }
 
-.button3{
+.button3 {
     -fx-background-color: #D100D1;
     -fx-text-fill: white;
     -fx-cursor: hand;
@@ -85,13 +88,14 @@
     -fx-font-weight: bold;
 }
 
-.button3:hover{
+.button3:hover {
     -fx-text-fill: white;
     -fx-cursor: hand;
     -fx-font-weight: bold;
     -fx-font-size: 15;
 }
-.button3:pressed{
+
+.button3:pressed {
     -fx-text-fill: whitesmoke;
     -fx-font-size: 15;
     -fx-cursor: hand;
