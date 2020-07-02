@@ -1,7 +1,5 @@
 package Pojo;
 
-import java.sql.Struct;
-
 public class Producto {
 
     private String descripcion;

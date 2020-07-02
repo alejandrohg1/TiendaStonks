@@ -6,7 +6,10 @@ import animatefx.animation.FadeIn;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -29,41 +33,43 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class UsuarioController implements Initializable {
+    public static String name;
+    public static String foto;
+    public static String rols;
+    public static ObservableList<Usuario> usuarioObservableList;
+    @FXML
+    public Label lblWelcome;
     @FXML
     private ImageView userImage;
     @FXML
     private TableView<Usuario> tableUser;
     @FXML
-    private TableColumn<Usuario,Integer> IdColumn;
+    private TableColumn<Usuario, Integer> IdColumn;
     @FXML
-    private TableColumn<Usuario,String> nameColumn;
+    private TableColumn<Usuario, String> nameColumn;
     @FXML
-    private TableColumn<Usuario,String> secondNameColumn;
+    private TableColumn<Usuario, String> secondNameColumn;
     @FXML
-    private TableColumn<Usuario,String> cedulaColumn;
+    private TableColumn<Usuario, String> cedulaColumn;
     @FXML
-    private TableColumn<Usuario,String> rolColumn;
+    private TableColumn<Usuario, String> rolColumn;
     @FXML
-    private TableColumn<Usuario,String> emailColumn;
+    private TableColumn<Usuario, String> emailColumn;
     @FXML
     private AnchorPane anchorPaneMain;
     @FXML
-    public Label lblWelcome;
-    @FXML
     private TextField txtBuscar;
     @FXML
-    private Button btnEditar,btnEliminar,buttonRegistrar;
+    private Button btnEditar, btnEliminar, buttonRegistrar;
     @FXML
     private ImageView imgPerfil;
 
-    public static String name;
-    public static String foto;
-    public static String rols;
-    public  static ObservableList<Usuario> usuarioObservableList;
-
-
+    public static ObservableList<Usuario> getUsuarioObservableList() throws FileNotFoundException {
+        return usuarioObservableList;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,7 +80,7 @@ public class UsuarioController implements Initializable {
             lblWelcome.setText(name);
             imgPerfil.setImage(new Image(foto));
 
-            if(!rols.equals("Admin")){
+            if (!rols.equals("Admin")) {
                 btnEliminar.setDisable(true);
                 btnEditar.setDisable(true);
                 buttonRegistrar.setDisable(true);
@@ -83,30 +89,29 @@ public class UsuarioController implements Initializable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        filterTextField();
 
 
     }
 
     //cerrar ventana
     public void closeWindow(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
+
     //cargar gson
-    public  void loadFromGson() {
+    public void loadFromGson() {
         Gson gson = new Gson();
         usuarioObservableList = FXCollections.observableArrayList();
 
         try {
-            usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/usuarios.json"), Usuario[].class)));
+            usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/usuarios.json").getPath()), Usuario[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
     }
 
-    public static ObservableList<Usuario> getUsuarioObservableList() throws FileNotFoundException {
-        return usuarioObservableList;
-    }
     //inicializar el dato de cada columna a recibir
     public void starColumns() throws FileNotFoundException {
 
@@ -126,20 +131,21 @@ public class UsuarioController implements Initializable {
 
 
     }
+
     //añadir al gson
-    public  void addToGson(ObservableList<Usuario> newData) {
+    public void addToGson(ObservableList<Usuario> newData) {
         FileWriter flw = null;
 
         Gson gson = new Gson();
 
         try {
-            flw = new FileWriter("./src/resources/Data/usuarios.json");
+            flw = new FileWriter(getClass().getResource("/resources/Data/usuarios.json").getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-            ObservableList<Usuario> jsonArray = newData;
-            gson.toJson(jsonArray, flw);
+        ObservableList<Usuario> jsonArray = newData;
+        gson.toJson(jsonArray, flw);
 
         try {
             flw.close();
@@ -149,16 +155,16 @@ public class UsuarioController implements Initializable {
 
     }
 
-    public void listPrueba(){
+    public void listPrueba() {
         usuarioObservableList = FXCollections.observableArrayList();
-        usuarioObservableList.add(new Usuario(1,"Alejandro","Hernandez","Cedula","fotoURL","rol","email","username","password"));
+        usuarioObservableList.add(new Usuario("0", "Alejandro", "Hernandez", "Cedula", "fotoURL", "rol", "email", "username", "password"));
         tableUser.setItems(usuarioObservableList);
     }
 
     //abre el stage de registrar empleado
     public void registrarEmpleado(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/RegisterUser.fxml"));
-        Parent root = (Parent)fxmlLoader.load();
+        Parent root = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.DECORATED);
         stage.setScene(new Scene(root));
@@ -166,23 +172,25 @@ public class UsuarioController implements Initializable {
         stage.setTitle("Registrar Usuarios");
         stage.show();
     }
+
     //guarda usuario y actualiza el gson
-    public  void saveUser(Usuario user){
+    public void saveUser(Usuario user) {
         usuarioObservableList.add(user);
         addToGson(usuarioObservableList);
 
     }
+
     //carga la lista observable a la tabla
-    public void loadData(){
+    public void loadData() {
         tableUser.setItems(usuarioObservableList);
     }
 
 
     //Pone imagen al seleccionar dato de la tabla
     public void setImageView(MouseEvent event) {
-        if(tableUser.getSelectionModel().getSelectedItem()==null){
+        if (tableUser.getSelectionModel().getSelectedItem() == null) {
             return;
-        }else{
+        } else {
             String foto = tableUser.getSelectionModel().getSelectedItem().getFotoUrl();
             userImage.setImage(new Image(foto));
         }
@@ -206,7 +214,7 @@ public class UsuarioController implements Initializable {
         editController.initData(tableUser.getSelectionModel().getSelectedItem());
 
         Optional<ButtonType> result = dialog.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK) {
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             editController.setUser(tableUser.getSelectionModel().getSelectedItem());
             updateContact();
         }
@@ -219,27 +227,30 @@ public class UsuarioController implements Initializable {
     public TableView<Usuario> getTableUser() {
         return tableUser;
     }
+
     //actualizar el gson
-    public void updateContact(){
+    public void updateContact() {
         addToGson(usuarioObservableList);
     }
 
     //borra usuario y actualiza gson
     public void deleteUser(ActionEvent event) {
-        if(tableUser.getSelectionModel().getSelectedItem()==null){
+        if (tableUser.getSelectionModel().getSelectedItem() == null) {
             return;
-        }else{
+        } else {
             usuarioObservableList.remove(tableUser.getSelectionModel().getSelectedItem());
             updateContact();
         }
 
     }
+
     //pone en la etiqueta username el nombre del usuario
-    public void setLblWelcome(String username,String photo,String rol) {
+    public void setLblWelcome(String username, String photo, String rol) {
         name = username;
         foto = photo;
         rols = rol;
     }
+
     //busca en la tabla el escrito en el texfield
     public void findName(ActionEvent event) {
 
@@ -248,29 +259,31 @@ public class UsuarioController implements Initializable {
         //crea una nueva lista para agregarla a la table
 
         for (Usuario u : usuarioObservableList) {
-            if (u.getNombre().equals(key) || u.getApellido().equals(key) || u.getCedula().equals(key) || u.getEmail().equals(key) || u.getRol().equals(key) ) {
+            if (u.getNombre().contains(key) || u.getApellido().contains(key) || u.getCedula().contains(key) || u.getEmail().contains(key) || u.getRol().contains(key)) {
                 tempList.add(u);
+                tableUser.setItems(tempList);
             }
         }
         //agrega la lista temporal a la tabla
-        tableUser.setItems(tempList);
+
         buttonRegistrar.setDisable(true);
     }
+
     //regresa la tabla a su estado inicial
     public void populateTable(MouseEvent event) throws FileNotFoundException {
-        if(!rols.equals("Admin")){
+        if (!rols.equals("Admin")) {
             btnEliminar.setDisable(true);
             btnEditar.setDisable(true);
             buttonRegistrar.setDisable(true);
-        }else{
+        } else {
             buttonRegistrar.setDisable(false);
             btnEditar.setDisable(false);
             btnEliminar.setDisable(false);
         }
 
-        loadFromGson();
-        starColumns();
-        loadData();
+        //loadFromGson();
+        //starColumns();
+        //loadData();
     }
 
 
@@ -287,4 +300,49 @@ public class UsuarioController implements Initializable {
 
     }
 
+    public void filterTextField() {
+
+        FilteredList<Usuario> filteredUsuarios = new FilteredList<>(usuarioObservableList);
+         txtBuscar.textProperty().addListener((observable, oldValue, newValue) ->{
+             filteredUsuarios.setPredicate((Predicate<? super Usuario>) user ->{
+
+                 if(newValue == null || newValue.isEmpty()){
+                     return true;
+                 }
+                 String lowerCase = newValue.toLowerCase();
+
+                 try {
+                      int index = Integer.parseInt(newValue);
+                 }catch(Exception e){
+                     System.out.println("hola");
+                 }
+
+
+                 if(user.getNombre().toLowerCase().contains(lowerCase)){
+                     return true;
+                 }else if(user.getApellido().toLowerCase().contains(lowerCase)){
+                     return  true;
+                 }else if(user.getCedula().toLowerCase().contains(lowerCase)){
+                     return true;
+                 }else if(user.getRol().toLowerCase().contains(lowerCase)){
+                     return  true;
+                 }else if(user.getEmail().toLowerCase().contains(lowerCase)){
+                     return true;
+                 }else if(user.getId().toLowerCase().contains(lowerCase)){
+                     return true;
+                 }
+                 return  false;
+             });
+         });
+
+         SortedList<Usuario> sortedList = new SortedList<>(filteredUsuarios);
+         sortedList.comparatorProperty().bind(tableUser.comparatorProperty());
+         tableUser.setItems(sortedList);
+
+    }
+
+
+    public void SortedList(KeyEvent keyEvent) {
+        filterTextField();
+    }
 }
