@@ -40,6 +40,7 @@ public class LoginController implements Initializable {
     @FXML
     private AnchorPane anchorPane;
     private ObservableList<Usuario> usuarioObservableList;
+    private static String rol;
 
 
     @Override
@@ -58,7 +59,6 @@ public class LoginController implements Initializable {
         String password = txtPassword.getText();
         String photo = null;
         String fullname = null;
-        String rol = null;
         boolean flagIntro = false;
         int countUser = 0, countPassword = 0, countBoth = 0;
         //validaciones del login
@@ -105,6 +105,7 @@ public class LoginController implements Initializable {
         if (flagIntro) {
             ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/MainMenu.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("/Views/MainMenu.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
@@ -112,6 +113,12 @@ public class LoginController implements Initializable {
             stage.getIcons().add(new Image("resources/images/iconTienda.png"));
             stage.show();
             new SlideInDown(root).play();
+            ControllerMain controllerMain = fxmlLoader.getController();
+            if(!rol.equals("Admin")){
+                controllerMain.getPaneButton().getChildren().remove(controllerMain.getButtonProveedores());
+                controllerMain.getPaneButton().getChildren().remove(controllerMain.getButtonUser());
+                controllerMain.getButtonFacturas().setLayoutY(174);
+            }
         }
         //pasa el nombre del usuario al main
         UsuarioController controller = new UsuarioController();
@@ -137,12 +144,15 @@ public class LoginController implements Initializable {
     public void loadFromGson() {
         Gson gson = new Gson();
         usuarioObservableList = FXCollections.observableArrayList();
-
         try {
-            usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/usuarios.json").getPath()), Usuario[].class)));
+            usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/Resources/Data/usuarios.json").getPath()), Usuario[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void passInfo(String rol){
 
     }
 
