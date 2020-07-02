@@ -235,12 +235,25 @@ public class UsuarioController implements Initializable {
 
     //borra usuario y actualiza gson
     public void deleteUser(ActionEvent event) {
-        if (tableUser.getSelectionModel().getSelectedItem() == null) {
-            return;
-        } else {
-            usuarioObservableList.remove(tableUser.getSelectionModel().getSelectedItem());
-            updateContact();
-        }
+        ButtonType eliminar = new ButtonType("Eliminar");
+        ButtonType cancelar = new ButtonType("Cancelar");
+        Alert a = new Alert(Alert.AlertType.ERROR, "Elminar Usuario:", eliminar, cancelar);
+        a.setTitle("Elimar Usuario");
+        a.setContentText("Esta Seguro que quiere elimanar este Usuario?");
+        a.showAndWait().ifPresent(response -> {
+            if (response == eliminar) {
+                if (tableUser.getSelectionModel().getSelectedItem() == null) {
+                    return;
+                } else {
+                    usuarioObservableList.remove(tableUser.getSelectionModel().getSelectedItem());
+                    updateContact();
+                }
+            } else if (response == cancelar) {
+                a.close();
+            }
+        });
+
+
 
     }
 
