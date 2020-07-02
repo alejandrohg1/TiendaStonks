@@ -38,7 +38,9 @@ public class RegisterUIController implements Initializable {
     public void getNewEmpleado(ActionEvent event) {
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
         UsuarioController usuarioController = new UsuarioController();
-        Usuario user = new Usuario(new Random().nextInt(9999), txtNombre.getText(), txtApellido.getText(), txtCedula.getText(), txtFoto.getText(), txtRol.getSelectionModel().getSelectedItem(), txtEmail.getText(), txtUsername.getText(), txtPassword.getText());
+        int index = new Random().nextInt(9999);
+        String id = String.valueOf(index);
+        Usuario user = new Usuario(id, txtNombre.getText(), txtApellido.getText(), txtCedula.getText(), txtFoto.getText(), txtRol.getSelectionModel().getSelectedItem(), txtEmail.getText(), txtUsername.getText(), txtPassword.getText());
         if (txtFoto.getText().isEmpty()) {
             user.setFotoUrl("https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png");
         }

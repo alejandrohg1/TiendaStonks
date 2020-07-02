@@ -6,7 +6,10 @@ import animatefx.animation.FadeIn;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -29,6 +33,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class UsuarioController implements Initializable {
     public static String name;
@@ -84,6 +89,7 @@ public class UsuarioController implements Initializable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        filterTextField();
 
 
     }
@@ -133,7 +139,7 @@ public class UsuarioController implements Initializable {
         Gson gson = new Gson();
 
         try {
-            flw = new FileWriter("./src/resources/Data/usuarios.json");
+            flw = new FileWriter(getClass().getResource("/resources/Data/usuarios.json").getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -151,7 +157,7 @@ public class UsuarioController implements Initializable {
 
     public void listPrueba() {
         usuarioObservableList = FXCollections.observableArrayList();
-        usuarioObservableList.add(new Usuario(1, "Alejandro", "Hernandez", "Cedula", "fotoURL", "rol", "email", "username", "password"));
+        usuarioObservableList.add(new Usuario("0", "Alejandro", "Hernandez", "Cedula", "fotoURL", "rol", "email", "username", "password"));
         tableUser.setItems(usuarioObservableList);
     }
 
@@ -253,12 +259,13 @@ public class UsuarioController implements Initializable {
         //crea una nueva lista para agregarla a la table
 
         for (Usuario u : usuarioObservableList) {
-            if (u.getNombre().equals(key) || u.getApellido().equals(key) || u.getCedula().equals(key) || u.getEmail().equals(key) || u.getRol().equals(key)) {
+            if (u.getNombre().contains(key) || u.getApellido().contains(key) || u.getCedula().contains(key) || u.getEmail().contains(key) || u.getRol().contains(key)) {
                 tempList.add(u);
+                tableUser.setItems(tempList);
             }
         }
         //agrega la lista temporal a la tabla
-        tableUser.setItems(tempList);
+
         buttonRegistrar.setDisable(true);
     }
 
@@ -274,9 +281,9 @@ public class UsuarioController implements Initializable {
             btnEliminar.setDisable(false);
         }
 
-        loadFromGson();
-        starColumns();
-        loadData();
+        //loadFromGson();
+        //starColumns();
+        //loadData();
     }
 
 
@@ -293,4 +300,49 @@ public class UsuarioController implements Initializable {
 
     }
 
+    public void filterTextField() {
+
+        FilteredList<Usuario> filteredUsuarios = new FilteredList<>(usuarioObservableList);
+         txtBuscar.textProperty().addListener((observable, oldValue, newValue) ->{
+             filteredUsuarios.setPredicate((Predicate<? super Usuario>) user ->{
+
+                 if(newValue == null || newValue.isEmpty()){
+                     return true;
+                 }
+                 String lowerCase = newValue.toLowerCase();
+
+                 try {
+                      int index = Integer.parseInt(newValue);
+                 }catch(Exception e){
+                     System.out.println("hola");
+                 }
+
+
+                 if(user.getNombre().toLowerCase().contains(lowerCase)){
+                     return true;
+                 }else if(user.getApellido().toLowerCase().contains(lowerCase)){
+                     return  true;
+                 }else if(user.getCedula().toLowerCase().contains(lowerCase)){
+                     return true;
+                 }else if(user.getRol().toLowerCase().contains(lowerCase)){
+                     return  true;
+                 }else if(user.getEmail().toLowerCase().contains(lowerCase)){
+                     return true;
+                 }else if(user.getId().toLowerCase().contains(lowerCase)){
+                     return true;
+                 }
+                 return  false;
+             });
+         });
+
+         SortedList<Usuario> sortedList = new SortedList<>(filteredUsuarios);
+         sortedList.comparatorProperty().bind(tableUser.comparatorProperty());
+         tableUser.setItems(sortedList);
+
+    }
+
+
+    public void SortedList(KeyEvent keyEvent) {
+        filterTextField();
+    }
 }
