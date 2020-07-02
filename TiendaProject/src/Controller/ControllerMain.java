@@ -71,4 +71,10 @@ public class ControllerMain implements Initializable {
     public Button getButtonFacturas() {
         return buttonFacturas;
     }
+
+    public void toVentasScene(ActionEvent event) throws IOException {
+        Node child = FXMLLoader.load(getClass().getResource("/Views/VentasScene.fxml"));
+        pnlTemp.getChildren().clear();
+        pnlTemp.getChildren().add(child);
+    }
 }
