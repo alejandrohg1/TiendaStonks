@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -254,7 +253,6 @@ public class UsuarioController implements Initializable {
         });
 
 
-
     }
 
     //pone en la etiqueta username el nombre del usuario
@@ -316,41 +314,34 @@ public class UsuarioController implements Initializable {
     public void filterTextField() {
 
         FilteredList<Usuario> filteredUsuarios = new FilteredList<>(usuarioObservableList);
-         txtBuscar.textProperty().addListener((observable, oldValue, newValue) ->{
-             filteredUsuarios.setPredicate((Predicate<? super Usuario>) user ->{
+        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredUsuarios.setPredicate((Predicate<? super Usuario>) user -> {
 
-                 if(newValue == null || newValue.isEmpty()){
-                     return true;
-                 }
-                 String lowerCase = newValue.toLowerCase();
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCase = newValue.toLowerCase();
 
-                 try {
-                      int index = Integer.parseInt(newValue);
-                 }catch(Exception e){
-                     System.out.println("hola");
-                 }
+                if (user.getNombre().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else if (user.getApellido().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else if (user.getCedula().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else if (user.getRol().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else if (user.getEmail().toLowerCase().contains(lowerCase)) {
+                    return true;
+                } else if (user.getId().toLowerCase().contains(lowerCase)) {
+                    return true;
+                }
+                return false;
+            });
+        });
 
-
-                 if(user.getNombre().toLowerCase().contains(lowerCase)){
-                     return true;
-                 }else if(user.getApellido().toLowerCase().contains(lowerCase)){
-                     return  true;
-                 }else if(user.getCedula().toLowerCase().contains(lowerCase)){
-                     return true;
-                 }else if(user.getRol().toLowerCase().contains(lowerCase)){
-                     return  true;
-                 }else if(user.getEmail().toLowerCase().contains(lowerCase)){
-                     return true;
-                 }else if(user.getId().toLowerCase().contains(lowerCase)){
-                     return true;
-                 }
-                 return  false;
-             });
-         });
-
-         SortedList<Usuario> sortedList = new SortedList<>(filteredUsuarios);
-         sortedList.comparatorProperty().bind(tableUser.comparatorProperty());
-         tableUser.setItems(sortedList);
+        SortedList<Usuario> sortedList = new SortedList<>(filteredUsuarios);
+        sortedList.comparatorProperty().bind(tableUser.comparatorProperty());
+        tableUser.setItems(sortedList);
 
     }
 
