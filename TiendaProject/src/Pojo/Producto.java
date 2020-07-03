@@ -1,39 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Pojo;
 
-/**
- *
- * @author Yiin Anton
- */
 public class Producto {
-    private String id_producto;
-    private String id_proveedor;
+
     private String descripcion;
-    private int stock;
-    private String precio;
-    private String rutaImagen;
+    private String idProducto;
+    private String stock;
+    private String fotoUrl;
+    private float precio;
+    private String seccion;
+    private String idProveedor;
+    private Proveedor proveedor;
 
     public Producto() {
     }
 
-    public String getId_producto() {
-        return id_producto;
-    }
-
-    public void setId_producto(String id_producto) {
-        this.id_producto = id_producto;
-    }
-
-    public String getId_proveedor() {
-        return id_proveedor;
-    }
-
-    public void setId_proveedor(String id_proveedor) {
-        this.id_proveedor = id_proveedor;
+    public Producto(String descripcion, String idProducto, String stock, String fotoUrl, float precio, String seccion, String idProveedor, Proveedor proveedor) {
+        this.descripcion = descripcion;
+        this.idProducto = idProducto;
+        this.stock = stock;
+        this.fotoUrl = fotoUrl;
+        this.precio = precio;
+        this.seccion = seccion;
+        this.idProveedor = idProveedor;
+        this.proveedor = proveedor;
     }
 
     public String getDescripcion() {
@@ -44,35 +33,59 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public int getStock() {
+    public String getIdprducto() {
+        return idProducto;
+    }
+
+    public void setIdprducto(String idprducto) {
+        this.idProducto = idprducto;
+    }
+
+    public String getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(String stock) {
         this.stock = stock;
     }
 
-    public String getPrecio() {
+    public String getFotoUrl() {
+        return fotoUrl;
+    }
+
+    public void setFotoUrl(String fotoUrl) {
+        this.fotoUrl = fotoUrl;
+    }
+
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
-    public String getRutaImagen() {
-        return rutaImagen;
+    public String getSeccion() {
+        return seccion;
     }
 
-    public void setRutaImagen(String rutaImagen) {
-        this.rutaImagen = rutaImagen;
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
     }
 
-    @Override
-    public String toString() {
-        return "Producto{" + "id_producto=" + id_producto + ", id_proveedor=" + id_proveedor + ", descripcion=" + descripcion + ", stock=" + stock + ", precio=" + precio + ", rutaImagen=" + rutaImagen + '}';
+    public String getIdProveedor() {
+        return idProveedor;
     }
-    
-    
-    
+
+    public void setIdProveedor(String idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
 }

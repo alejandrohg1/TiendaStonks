@@ -1,12 +1,10 @@
 package Pojo;
 
-import javafx.beans.property.SimpleStringProperty;
-
 public class Usuario {
-    private int id;
-    private String nombre,apellido,cedula,fotoUrl,rol,email,username,password;
+    private String id;
+    private String nombre, apellido, cedula, fotoUrl, rol, email, username, password;
 
-    public Usuario(int id, String nombre, String apellido, String cedula, String fotoUrl, String rol, String email, String username, String password) {
+    public Usuario(String id, String nombre, String apellido, String cedula, String fotoUrl, String rol, String email, String username, String password) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -18,11 +16,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

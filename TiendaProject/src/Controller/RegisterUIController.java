@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -20,32 +21,35 @@ public class RegisterUIController implements Initializable {
     @FXML
     private ComboBox<String> txtRol;
     @FXML
-    private TextField txtEmail,txtUsername,txtFoto,txtApellido,txtNombre,txtCedula;
+    private TextField txtEmail, txtUsername, txtFoto, txtApellido, txtNombre, txtCedula;
     @FXML
     private PasswordField txtPassword;
+
+    private Pane pnlTemp;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> products = FXCollections.observableArrayList();
-        products.addAll("Admin","Cajero","Gerente");
+        products.addAll("Admin", "Cajero", "Gerente");
         txtRol.setItems(products);
     }
 
 
     public void getNewEmpleado(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
         UsuarioController usuarioController = new UsuarioController();
-        Usuario user = new Usuario(new Random().nextInt(9999),txtNombre.getText(),txtApellido.getText(),txtCedula.getText(),txtFoto.getText(),txtRol.getSelectionModel().getSelectedItem(),txtEmail.getText(),txtUsername.getText(),txtPassword.getText());
-        if(txtFoto.getText().isEmpty()){
+        int index = new Random().nextInt(9999);
+        String id = String.valueOf(index);
+        Usuario user = new Usuario(id, txtNombre.getText(), txtApellido.getText(), txtCedula.getText(), txtFoto.getText(), txtRol.getSelectionModel().getSelectedItem(), txtEmail.getText(), txtUsername.getText(), txtPassword.getText());
+        if (txtFoto.getText().isEmpty()) {
             user.setFotoUrl("https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png");
         }
 
-      usuarioController.saveUser(user);
+        usuarioController.saveUser(user);
 
     }
 
-    public void editEmpleado(Usuario user){
-
+    public void editEmpleado(Usuario user) {
 
     }
 
