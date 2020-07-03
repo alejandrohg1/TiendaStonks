@@ -8,8 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="AnimateFX-1.2.1" level="project" />
+    <orderEntry type="library" exported="" name="AnimateFX-1.2.1" level="project" />
     <orderEntry type="library" name="AnimateFX-1.2.0" level="application" />
-    <orderEntry type="library" name="gson-2.8.21" level="application" />
+    <orderEntry type="library" exported="" name="gson-2.8.21" level="application" />
   </component>
 </module>
