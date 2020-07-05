@@ -77,4 +77,10 @@ public class ControllerMain implements Initializable {
         pnlTemp.getChildren().clear();
         pnlTemp.getChildren().add(child);
     }
+
+    public void toFacturasScene(ActionEvent event) throws IOException {
+        Node child = FXMLLoader.load(getClass().getResource("/Views/FacturaScene.fxml"));
+        pnlTemp.getChildren().clear();
+        pnlTemp.getChildren().add(child);
+    }
 }

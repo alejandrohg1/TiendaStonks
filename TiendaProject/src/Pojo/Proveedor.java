@@ -79,4 +79,17 @@ public class Proveedor {
     public void setIdProveedor(String idProveedor) {
         this.idProveedor = idProveedor;
     }
+
+    @Override
+    public String toString() {
+        return "Proveedor{" +
+                "nombreProv='" + nombreProv + '\'' +
+                ", apellidoProv='" + apellidoProv + '\'' +
+                ", cedula='" + cedula + '\'' +
+                ", correo='" + correo + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", ruc='" + ruc + '\'' +
+                ", idProveedor='" + idProveedor + '\'' +
+                '}';
+    }
 }

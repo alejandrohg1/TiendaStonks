@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JsonSchemaMappingsProjectConfiguration">
+    <state>
+      <map>
+        <entry key="2.0.0-csd.2.beta.2018-10-10">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="2.0.0-csd.2.beta.2018-10-10" />
+              <option name="relativePathToSchema" value="https://json.schemastore.org/2.0.0-csd.2.beta.2018-10-10.json" />
+              <option name="schemaVersion" value="JSON Schema version 6" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="TiendaProject/src/resources/Data/productos.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="IntelliJ Themes">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="IntelliJ Themes" />
+              <option name="relativePathToSchema" value="$APPLICATION_HOME_DIR$/plugins/devkit/lib/devkit.jar!/schemes/theme.schema.json" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="TiendaProject/src/resources/Data/ProductoData.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+      </map>
+    </state>
+  </component>
+</project>

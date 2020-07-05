@@ -13,10 +13,10 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class ProductoData {
-    public static ObservableList<Producto> productos;
+    public  ObservableList<Producto> productos;
 
     public ProductoData() {
-        loadFromGson();
+
     }
 
     public void loadFromGson() {
@@ -24,7 +24,7 @@ public class ProductoData {
         productos = FXCollections.observableArrayList();
 
         try {
-            productos.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/ProductoData.json"), Producto[].class)));
+            productos.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/ProductoData.json").getPath()), Producto[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -37,7 +37,7 @@ public class ProductoData {
         Gson gson = new Gson();
 
         try {
-            flw = new FileWriter("./src/resources/Data/ProductoData.json");
+            flw = new FileWriter(getClass().getResource("/resources/Data/ProductoData.json").getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,4 +52,11 @@ public class ProductoData {
         }
 
     }
+
+    public ObservableList<Producto> getProductos() {
+
+        return productos;
+    }
+
+
 }

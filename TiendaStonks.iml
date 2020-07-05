@@ -11,5 +11,7 @@
     <orderEntry type="library" exported="" name="AnimateFX-1.2.1" level="project" />
     <orderEntry type="library" name="AnimateFX-1.2.0" level="application" />
     <orderEntry type="library" exported="" name="gson-2.8.21" level="application" />
+    <orderEntry type="library" name="charm-glisten-4.4.1-javadoc" level="project" />
+    <orderEntry type="library" exported="" name="charm-glisten-4.4.1" level="project" />
   </component>
 </module>
