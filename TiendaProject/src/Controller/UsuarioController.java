@@ -343,6 +343,7 @@ public class UsuarioController implements Initializable {
         sortedList.comparatorProperty().bind(tableUser.comparatorProperty());
         tableUser.setItems(sortedList);
 
+
     }
 
 

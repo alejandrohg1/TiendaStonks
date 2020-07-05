@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="733.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.VentasController">
+<AnchorPane fx:id="anchorPaneMain" prefHeight="733.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.VentasController">
    <children>
       <Pane layoutY="-2.0" prefHeight="59.0" prefWidth="1070.0" style="-fx-background-color: #8b5dbb">
          <children>
@@ -32,8 +32,7 @@
       <Pane layoutY="57.0" prefHeight="179.0" prefWidth="1070.0">
          <children>
             <DatePicker fx:id="datePickerFactura" layoutX="882.0" layoutY="23.0" prefHeight="25.0" prefWidth="165.0" />
-            <TextField fx:id="txtProducto" layoutX="529.0" layoutY="140.0" prefHeight="25.0" prefWidth="521.0" promptText="Producto..." />
-            <Button layoutX="489.0" layoutY="135.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+            <Button layoutX="483.0" layoutY="135.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -74,6 +73,7 @@
                </font>
             </Label>
             <TextField fx:id="txtStockDisponible" editable="false" layoutX="142.0" layoutY="101.0" prefHeight="25.0" prefWidth="165.0" />
+            <TextField fx:id="txtProducts" layoutX="535.0" layoutY="140.0" prefHeight="26.0" prefWidth="509.0" promptText="Productos..." />
          </children>
       </Pane>
       <Pane layoutX="3.0" layoutY="659.0" prefHeight="74.0" prefWidth="1063.0" style="-fx-background-color: white;">
@@ -96,7 +96,7 @@
                </font>
             </Label>
             <TextField fx:id="txtTotal" editable="false" layoutX="272.0" layoutY="37.0" prefHeight="25.0" prefWidth="128.0" styleClass="text-fieldVenta" stylesheets="@../Styles/textfield.css" />
-            <Button layoutX="498.0" layoutY="37.0" mnemonicParsing="false" stylesheets="@../Styles/button.css" text="Saldar" />
+            <Button layoutX="496.0" layoutY="37.0" mnemonicParsing="false" text="Saldar" />
             <TextField fx:id="txtSaldoCliente" layoutX="563.0" layoutY="37.0" styleClass="text-fieldVenta" stylesheets="@../Styles/textfield.css" />
             <Label layoutX="563.0" layoutY="16.0" text="Saldo del Cliente">
                <font>
@@ -143,11 +143,11 @@
          <children>
             <TableView fx:id="tblProducto" prefHeight="423.0" prefWidth="1056.0">
               <columns>
-                <TableColumn prefWidth="128.00001525878906" text="Codigo" />
-                <TableColumn prefWidth="115.0" text="Cantidad" />
-                  <TableColumn prefWidth="570.9999847412109" text="Descripcion" />
-                  <TableColumn minWidth="0.0" prefWidth="127.0" text="Precio Unid." />
-                  <TableColumn prefWidth="112.0" text="Precio Total" />
+                <TableColumn fx:id="columnCodigo" prefWidth="128.00001525878906" text="Codigo" />
+                <TableColumn fx:id="columnCantidad" prefWidth="115.0" text="Cantidad" />
+                  <TableColumn fx:id="columnDescripcion" prefWidth="570.9999847412109" text="Descripcion" />
+                  <TableColumn fx:id="columnPrecioUni" minWidth="0.0" prefWidth="127.0" text="Precio Unid." />
+                  <TableColumn fx:id="columnPrecioTotal" prefWidth="112.0" text="Precio Total" />
               </columns>
             </TableView>
          </children></Pane>
