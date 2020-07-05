@@ -41,4 +41,10 @@
     -fx-background-radius: 0
 }
 
+.text-fieldProveedor {
+    -fx-background-color: #457b9d, white;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-radius: 0
+}
+
 

@@ -145,7 +145,7 @@ public class LoginController implements Initializable {
         Gson gson = new Gson();
         usuarioObservableList = FXCollections.observableArrayList();
         try {
-            usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/Resources/Data/usuarios.json").getPath()), Usuario[].class)));
+            usuarioObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/usuarios.json").getPath()), Usuario[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

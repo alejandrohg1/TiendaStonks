@@ -49,6 +49,9 @@
 .linear-grad {
     -fx-background-color: linear-gradient(to bottom left, #6f4cbb, #431fa0);
 }
+#linear-gradProveedor{
+    -fx-background-color: linear-gradient(to bottom left,#457b9d,#5390d9);
+}
 
 .buttonUser {
     -fx-background-color: #9229f5;
@@ -100,6 +103,22 @@
     -fx-font-size: 15;
     -fx-cursor: hand;
     -fx-font-weight: bold;
+}
+
+.button4 {
+    -fx-background-color: #457b9d;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.button4:hover {
+    -fx-text-fill: #431fa0;
+    -fx-cursor: hand;
+}
+
+.button4:pressed {
+    -fx-text-fill: #371897;
+    -fx-cursor: hand;
 }
 
 
