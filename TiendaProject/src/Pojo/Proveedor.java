@@ -13,7 +13,6 @@ public class Proveedor {
     public Proveedor() {
     }
 
-
     public Proveedor(String nombreProv, String apellidoProv, String cedula, String correo, String telefono, String ruc, String idProveedor) {
         this.nombreProv = nombreProv;
         this.apellidoProv = apellidoProv;

@@ -83,4 +83,10 @@ public class ControllerMain implements Initializable {
         pnlTemp.getChildren().clear();
         pnlTemp.getChildren().add(child);
     }
+
+    public void toProveedoresScene(ActionEvent event) throws IOException {
+        Node child = FXMLLoader.load(getClass().getResource("/Views/ProveedoresScene.fxml"));
+        pnlTemp.getChildren().clear();
+        pnlTemp.getChildren().add(child);
+    }
 }

@@ -31,7 +31,7 @@ public class ProductoData {
 
     }
 
-    public void addToGson(ObservableList<Usuario> newData) {
+    public void addToGson(ObservableList<Producto> newData) {
         FileWriter flw = null;
 
         Gson gson = new Gson();
@@ -42,7 +42,7 @@ public class ProductoData {
             e.printStackTrace();
         }
 
-        ObservableList<Usuario> jsonArray = newData;
+        ObservableList<Producto> jsonArray = newData;
         gson.toJson(jsonArray, flw);
 
         try {
@@ -56,6 +56,10 @@ public class ProductoData {
     public ObservableList<Producto> getProductos() {
 
         return productos;
+    }
+
+    public void updateProductList(){
+        addToGson(productos);
     }
 
 

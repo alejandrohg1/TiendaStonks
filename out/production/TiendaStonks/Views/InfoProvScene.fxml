@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="494.0" prefWidth="801.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.InfoProvController">
+   <children>
+      <Pane id="linear-gradProveedor" layoutX="549.0" prefHeight="494.0" prefWidth="252.0" stylesheets="@../Styles/button.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="49.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/images/products_items_icon_142921.png" />
+               </image>
+            </ImageView>
+            <ListView fx:id="listViewProductos" layoutX="26.0" layoutY="226.0" prefHeight="200.0" prefWidth="200.0" />
+            <Label layoutX="47.0" layoutY="186.0" text="Lista de Productos" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <Label layoutX="27.0" layoutY="177.0" text="Nombre">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="260.0" text="Apellido">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="104.0" text="Id Del Proveedor">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNombre" editable="false" layoutX="27.0" layoutY="222.0" prefHeight="25.0" prefWidth="169.0" styleClass="text-fieldProveedor" stylesheets="@../Styles/textfield.css" />
+      <TextField fx:id="txtApellido" editable="false" layoutX="27.0" layoutY="297.0" prefHeight="25.0" prefWidth="169.0" styleClass="text-fieldProveedor" stylesheets="@../Styles/textfield.css" />
+      <Label layoutX="31.0" layoutY="336.0" text="Correo">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtCorreo" editable="false" layoutX="27.0" layoutY="368.0" prefHeight="88.0" prefWidth="464.0" styleClass="text-fieldProveedor" stylesheets="@../Styles/textfield.css" />
+      <TextField fx:id="txtIdProv" editable="false" layoutX="31.0" layoutY="142.0" prefHeight="25.0" prefWidth="169.0" styleClass="text-fieldProveedor" stylesheets="@../Styles/textfield.css" />
+      <Label layoutX="283.0" layoutY="177.0" text="Cedula">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="283.0" layoutY="260.0" text="Telefono">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCedula" editable="false" layoutX="283.0" layoutY="222.0" prefHeight="25.0" prefWidth="169.0" styleClass="text-fieldProveedor" stylesheets="@../Styles/textfield.css" />
+      <TextField fx:id="txtTelefono" editable="false" layoutX="283.0" layoutY="297.0" prefHeight="25.0" prefWidth="169.0" styleClass="text-fieldProveedor" stylesheets="@../Styles/textfield.css" />
+      <TextField fx:id="txtRuc" editable="false" layoutX="283.0" layoutY="142.0" prefHeight="25.0" prefWidth="169.0" styleClass="text-fieldProveedor" stylesheets="@../Styles/textfield.css" />
+      <Label layoutX="283.0" layoutY="104.0" text="RUC">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Pane layoutY="-4.0" prefHeight="88.0" prefWidth="549.0" style="-fx-background-color: #B4D4EE">
+         <children>
+            <Label layoutX="27.0" layoutY="30.0" text="Informacion Del Proveedor">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

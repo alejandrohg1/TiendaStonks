@@ -14,10 +14,10 @@ import java.util.Arrays;
 
 public class ProveedorData {
 
-    public static ObservableList<Proveedor> proveedores;
+    public  ObservableList<Proveedor> proveedores;
 
     public ProveedorData() {
-        loadFromGson();
+        proveedores = FXCollections.observableArrayList();
     }
 
     public void loadFromGson() {
@@ -25,25 +25,26 @@ public class ProveedorData {
         proveedores = FXCollections.observableArrayList();
 
         try {
-            proveedores.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/ProveedorData.json"), Proveedor[].class)));
+            proveedores.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/ProveedorData.json").getPath()), Proveedor[].class)));
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void addToGson(ObservableList<Usuario> newData) {
+    public void addToGson(ObservableList<Proveedor> newData) {
         FileWriter flw = null;
 
         Gson gson = new Gson();
 
         try {
-            flw = new FileWriter("./src/resources/Data/ProveedorData.json");
+            flw = new FileWriter(getClass().getResource("/resources/Data/ProveedorData.json").getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        ObservableList<Usuario> jsonArray = newData;
+        ObservableList<Proveedor> jsonArray = newData;
         gson.toJson(jsonArray, flw);
 
         try {
@@ -54,5 +55,11 @@ public class ProveedorData {
 
     }
 
+    public void updateProveedorList(){
+        addToGson(proveedores);
+    }
 
+    public ObservableList<Proveedor> getProveedores() {
+        return proveedores;
+    }
 }
