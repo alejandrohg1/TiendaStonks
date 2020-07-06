@@ -107,7 +107,7 @@ public class ProductoTemplateController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/InfoProducto.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.DECORATED);
         stage.setScene(new Scene(root));
         stage.getIcons().add(new Image("resources/images/iconTienda.png"));
         stage.setTitle("Editar Producto");

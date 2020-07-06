@@ -29,7 +29,10 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -39,6 +42,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -106,8 +111,15 @@ public class InfoProductoController implements Initializable {
         llenarItems();
     }    
     @FXML
-    private void btnNuevoProvAction(ActionEvent event) {
-        //llamar al stage de Nuevo Proveedor
+    private void btnNuevoProvAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/ProveedorRegister.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.setTitle("Registrar Proveedor");
+        stage.show();
     }
 
     @FXML
