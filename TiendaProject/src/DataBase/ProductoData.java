@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class ProductoData {
     public  ObservableList<Producto> productos;
@@ -30,7 +31,17 @@ public class ProductoData {
         }
 
     }
+    public List<Producto> getProductsAsList() {
+        Gson gson = new Gson();
+        List<Producto> products = null;
 
+        try {
+            products = (Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/ProductoData.json").getPath()), Producto[].class)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+       return products;
+    }
     public void addToGson(ObservableList<Usuario> newData) {
         FileWriter flw = null;
 
