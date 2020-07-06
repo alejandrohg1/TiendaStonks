@@ -6,7 +6,6 @@
 package Controller;
 
 import DataBase.ProductoData;
-import static DataBase.ProductoData.productos;
 import Pojo.Producto;
 import com.google.gson.Gson;
 import java.io.FileNotFoundException;
@@ -43,14 +42,14 @@ public class ProductoController implements Initializable {
 
     @FXML
     private FlowPane flowPaneProducts;
-    
     @FXML
     private ScrollPane scrollPaneContent;
-    
-    public static ObservableList<Producto> productoObservableList;
-    public ProductoData prodData;
     @FXML
     private Button btnBuscar;
+
+    public static ObservableList<Producto> productoObservableList;
+    public ProductoData prodData;
+
     
     
     @Override
@@ -108,12 +107,11 @@ public class ProductoController implements Initializable {
        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
     
-    public static void loadFromGson() {
+    public void loadFromGson() {
         Gson gson = new Gson();
         productoObservableList = FXCollections.observableArrayList();
-
         try {
-            productoObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/productos.json"), Producto[].class)));
+            productoObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/productos.json").getPath()), Producto[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

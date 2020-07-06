@@ -258,7 +258,7 @@ public class InfoProductoController implements Initializable {
         prodTemp = FXCollections.observableArrayList();
 
         try {
-            prodTemp.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/productos.json"), Producto[].class)));
+            prodTemp.addAll(Arrays.asList(gson.fromJson(new FileReader( getClass().getResource("/resources/Data/productos.json").getPath()), Producto[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -269,7 +269,7 @@ public class InfoProductoController implements Initializable {
         provTemp = FXCollections.observableArrayList();
 
         try {
-            provTemp.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/ProveedorData.json"), Proveedor[].class)));
+            provTemp.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/ProveedorData.json").getPath()), Proveedor[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -281,7 +281,7 @@ public class InfoProductoController implements Initializable {
         Gson gson = new Gson();
 
         try {
-            flw = new FileWriter("./src/resources/Data/productos.json");
+            flw = new FileWriter(getClass().getResource("/resources/Data/productos.json").getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
