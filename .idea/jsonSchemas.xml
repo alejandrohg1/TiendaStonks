@@ -3,23 +3,6 @@
   <component name="JsonSchemaMappingsProjectConfiguration">
     <state>
       <map>
-        <entry key="2.0.0-csd.2.beta.2018-10-10">
-          <value>
-            <SchemaInfo>
-              <option name="name" value="2.0.0-csd.2.beta.2018-10-10" />
-              <option name="relativePathToSchema" value="https://json.schemastore.org/2.0.0-csd.2.beta.2018-10-10.json" />
-              <option name="schemaVersion" value="JSON Schema version 6" />
-              <option name="applicationDefined" value="true" />
-              <option name="patterns">
-                <list>
-                  <Item>
-                    <option name="path" value="TiendaProject/src/resources/Data/productos.json" />
-                  </Item>
-                </list>
-              </option>
-            </SchemaInfo>
-          </value>
-        </entry>
         <entry key="IntelliJ Themes">
           <value>
             <SchemaInfo>
@@ -36,11 +19,11 @@
             </SchemaInfo>
           </value>
         </entry>
-        <entry key="JSConfig">
+        <entry key="JSON Schema version 4">
           <value>
             <SchemaInfo>
-              <option name="name" value="JSConfig" />
-              <option name="relativePathToSchema" value="http://json.schemastore.org/jsconfig" />
+              <option name="name" value="JSON Schema version 4" />
+              <option name="relativePathToSchema" value="http://json-schema.org/draft-04/schema" />
               <option name="applicationDefined" value="true" />
               <option name="patterns">
                 <list>
@@ -62,6 +45,22 @@
                 <list>
                   <Item>
                     <option name="path" value="TiendaProject/src/resources/Data/ProveedorData.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="json.schemastore.org">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="json.schemastore.org" />
+              <option name="relativePathToSchema" value="https://json.schemastore.org/config" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="out/production/TiendaStonks/resources/Data/ProveedorData.json" />
                   </Item>
                 </list>
               </option>

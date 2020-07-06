@@ -192,6 +192,7 @@ public class UsuarioController implements Initializable {
         } else {
             String foto = tableUser.getSelectionModel().getSelectedItem().getFotoUrl();
             userImage.setImage(new Image(foto));
+            userImage.resize(200,300);
         }
     }
 
