@@ -59,6 +59,8 @@ public class VentasController implements Initializable {
         productoData.loadFromGson();
         List<Producto> products = productoData.getProductsAsList();
 
+        //AutoBusqueda
+
         products.forEach(c -> {
             suggestions.add(c.getDescripcion());
         });
