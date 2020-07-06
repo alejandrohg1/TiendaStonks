@@ -16,5 +16,6 @@
     <orderEntry type="library" name="gson-2.8.2" level="project" />
     <orderEntry type="library" name="controlsfx-8.40.14" level="project" />
     <orderEntry type="library" name="controlsfx-8.40.141" level="project" />
+    <orderEntry type="library" name="AnimateFX-1.2.11" level="project" />
   </component>
 </module>

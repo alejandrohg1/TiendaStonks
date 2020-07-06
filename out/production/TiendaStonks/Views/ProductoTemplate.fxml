@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorpaneMain" prefHeight="397.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductoTemplateController">
+   <children>
+      <BorderPane fx:id="borderPaneProducts" prefHeight="415.0" prefWidth="302.0">
+         <bottom>
+            <VBox prefHeight="223.0" prefWidth="284.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="284.0">
+                     <children>
+                        <VBox prefHeight="51.0" prefWidth="301.0">
+                           <children>
+                              <Label fx:id="lblCod" style="-fx-text-fill: #9229f5;" text="ID Producto:">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblCodProveedor" style="-fx-text-fill: #9229f5;" text="ID Proveedor:">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <FlowPane prefHeight="167.0" prefWidth="284.0">
+                     <children>
+                        <Label fx:id="lblProductDescription" alignment="TOP_LEFT" prefHeight="49.0" prefWidth="303.0" text="Descripcion:" wrapText="true">
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lblProductSection" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="303.0" text="Seccion:" wrapText="true">
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lblProductCantidad" prefHeight="42.0" prefWidth="303.0" text="Cantidad:">
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lblProductPrecio" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="270.0" style="-fx-text-fill: #9229f5;" text="Precio" textAlignment="RIGHT" textFill="#50b931">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                           <padding>
+                              <Insets left="15.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <Button fx:id="btnDetalles" mnemonicParsing="false" onAction="#verDetalles" prefHeight="31.0" prefWidth="128.0" style="-fx-background-color: #6f4cbb;-fx-text-fill: white;-fx-cursor: hand;" text="Ver Detalles" />
+                     </children>
+                  </FlowPane>
+               </children>
+            </VBox>
+         </bottom>
+         <top>
+            <AnchorPane fx:id="anchorPaneimg" prefHeight="189.0" prefWidth="301.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="imgvProduct" fitHeight="179.0" fitWidth="235.0" layoutX="34.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

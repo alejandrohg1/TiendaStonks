@@ -14,11 +14,18 @@ import java.util.Arrays;
 
 public class ProveedorData {
 
-    public  ObservableList<Proveedor> proveedores;
+    public ObservableList<Proveedor> proveedores;
 
     public ProveedorData() {
         proveedores = FXCollections.observableArrayList();
     }
+    
+    public ObservableList<Proveedor> getProveedor() throws FileNotFoundException{
+       if(proveedores.isEmpty()){
+           loadFromGson();
+       }
+       return proveedores;
+   }
 
     public void loadFromGson() {
         Gson gson = new Gson();
@@ -30,7 +37,6 @@ public class ProveedorData {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     public void addToGson(ObservableList<Proveedor> newData) {
