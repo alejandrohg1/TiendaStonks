@@ -1,5 +1,7 @@
 package Pojo;
 
+import java.util.List;
+
 public class Producto {
 
     private String descripcion;
