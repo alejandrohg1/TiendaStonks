@@ -118,15 +118,15 @@ public class UsuarioController implements Initializable {
         IdColumn.setMinWidth(50);
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        nameColumn.setMinWidth(200);
+        nameColumn.setMinWidth(150);
         secondNameColumn.setCellValueFactory(new PropertyValueFactory<>("apellido"));
-        secondNameColumn.setMinWidth(200);
+        secondNameColumn.setMinWidth(150);
         cedulaColumn.setCellValueFactory(new PropertyValueFactory<>("cedula"));
-        cedulaColumn.setMinWidth(200);
+        cedulaColumn.setMinWidth(150);
         rolColumn.setCellValueFactory(new PropertyValueFactory<>("rol"));
-        rolColumn.setMinWidth(200);
+        rolColumn.setMinWidth(150);
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        emailColumn.setMinWidth(200);
+        emailColumn.setMinWidth(150);
 
 
     }
@@ -192,6 +192,7 @@ public class UsuarioController implements Initializable {
         } else {
             String foto = tableUser.getSelectionModel().getSelectedItem().getFotoUrl();
             userImage.setImage(new Image(foto));
+            userImage.resize(200,300);
         }
     }
 
@@ -342,6 +343,7 @@ public class UsuarioController implements Initializable {
         SortedList<Usuario> sortedList = new SortedList<>(filteredUsuarios);
         sortedList.comparatorProperty().bind(tableUser.comparatorProperty());
         tableUser.setItems(sortedList);
+
 
     }
 

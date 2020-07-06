@@ -14,10 +14,10 @@ import java.util.Arrays;
 
 public class ProveedorData {
 
-    public static ObservableList<Proveedor> proveedores;
+    public  ObservableList<Proveedor> proveedores;
 
     public ProveedorData() {
-        loadFromGson();
+        proveedores = FXCollections.observableArrayList();
     }
     
     public static ObservableList<Proveedor> getProveedor() throws FileNotFoundException{
@@ -32,7 +32,8 @@ public class ProveedorData {
         proveedores = FXCollections.observableArrayList();
 
         try {
-            proveedores.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/ProveedorData.json"), Proveedor[].class)));
+            proveedores.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/ProveedorData.json").getPath()), Proveedor[].class)));
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -44,7 +45,7 @@ public class ProveedorData {
         Gson gson = new Gson();
 
         try {
-            flw = new FileWriter("./src/resources/Data/ProveedorData.json");
+            flw = new FileWriter(getClass().getResource("/resources/Data/ProveedorData.json").getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,5 +61,11 @@ public class ProveedorData {
 
     }
 
+    public void updateProveedorList(){
+        addToGson(proveedores);
+    }
 
+    public ObservableList<Proveedor> getProveedores() {
+        return proveedores;
+    }
 }

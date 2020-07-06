@@ -1,67 +1,79 @@
 package DataBase;
 
 import Pojo.Producto;
+import Pojo.Usuario;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class ProductoData {
-    public static ObservableList<Producto> productos;
+    public  ObservableList<Producto> productos;
 
     public ProductoData() {
-        loadFromGson();
+
     }
-    
-    public static ObservableList<Producto> getProductos() throws FileNotFoundException{
-       if(productos.isEmpty()){
-           loadFromGson();
-       }
-       return productos;
-   }
-    
-    public static void loadFromGson() {
+
+    public void loadFromGson() {
         Gson gson = new Gson();
         productos = FXCollections.observableArrayList();
 
         try {
-            productos.addAll(Arrays.asList(gson.fromJson(new FileReader("./src/resources/Data/productos.json"), Producto[].class)));
+            productos.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/ProductoData.json").getPath()), Producto[].class)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
     }
-    
-    public static void addToGson(ObservableList<Producto> newData) {
+
+    public void addToGson(ObservableList<Producto> newData) {
         FileWriter flw = null;
 
         Gson gson = new Gson();
 
         try {
-            flw = new FileWriter("./src/resources/Data/productos.json");
+            flw = new FileWriter(getClass().getResource("/resources/Data/ProductoData.json").getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-            ObservableList<Producto> jsonArray = newData;
-            gson.toJson(jsonArray, flw);
+        ObservableList<Producto> jsonArray = newData;
+        gson.toJson(jsonArray, flw);
 
         try {
             flw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    
-    public static void saveUser(Producto p) {
-        productos.add(p);
-        addToGson(productos);
 
     }
-    
-    
+
+    public ObservableList<Producto> getProductos() {
+
+        return productos;
+    }
+
+    public void updateProductList(){
+        addToGson(productos);
+    }
+
+    public List<Producto> getProductsAsList() {
+        Gson gson = new Gson();
+        List<Producto> products = null;
+
+        try {
+            products = (Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/ProductoData.json").getPath()), Producto[].class)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+
 }

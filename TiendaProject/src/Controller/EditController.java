@@ -10,6 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -60,6 +62,8 @@ public class EditController implements Initializable {
     public Button getButtonEditar() {
         return buttonEditar;
     }
+
+
 
 }
 
