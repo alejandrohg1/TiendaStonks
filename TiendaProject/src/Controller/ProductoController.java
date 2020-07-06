@@ -5,9 +5,9 @@
  */
 package Controller;
 
-import static Controller.UsuarioController.usuarioObservableList;
+import DataBase.ProductoData;
+import static DataBase.ProductoData.productos;
 import Pojo.Producto;
-import Pojo.Usuario;
 import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,7 +15,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,10 +25,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -45,14 +48,21 @@ public class ProductoController implements Initializable {
     private ScrollPane scrollPaneContent;
     
     public static ObservableList<Producto> productoObservableList;
+    public ProductoData prodData;
+    @FXML
+    private Button btnBuscar;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadData();
+        try {
+            loadData();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void loadData(){
+    public void loadData() throws FileNotFoundException{
         loadFromGson();
         flowPaneProducts.getChildren().clear();
         for(Producto p : productoObservableList){
@@ -72,9 +82,33 @@ public class ProductoController implements Initializable {
         }
     }
     
+     @FXML
+    private void refrescar(ActionEvent event) {
+        try {
+            loadData();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
+     @FXML
+    private void btnNuevoProducto_Action(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/InfoProducto.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.setTitle("Registrar Producto");
+        stage.show();
+    }
     
-    public  void loadFromGson() {
+    @FXML
+    public void closeWindow(ActionEvent event) {
+       ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    }
+    
+    public static void loadFromGson() {
         Gson gson = new Gson();
         productoObservableList = FXCollections.observableArrayList();
 
@@ -83,30 +117,5 @@ public class ProductoController implements Initializable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-    
-    public  void addToGson(ObservableList<Usuario> newData) {
-        FileWriter flw = null;
-
-        Gson gson = new Gson();
-
-        try {
-            flw = new FileWriter("./src/resources/Data/productos.json");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-            ObservableList<Usuario> jsonArray = newData;
-            gson.toJson(jsonArray, flw);
-
-        try {
-            flw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void closeWindow(ActionEvent event) {
-       ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
 }

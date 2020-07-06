@@ -19,8 +19,15 @@ public class ProveedorData {
     public ProveedorData() {
         loadFromGson();
     }
+    
+    public static ObservableList<Proveedor> getProveedor() throws FileNotFoundException{
+       if(proveedores.isEmpty()){
+           loadFromGson();
+       }
+       return proveedores;
+   }
 
-    public void loadFromGson() {
+    public static void loadFromGson() {
         Gson gson = new Gson();
         proveedores = FXCollections.observableArrayList();
 
@@ -29,10 +36,9 @@ public class ProveedorData {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
-    public void addToGson(ObservableList<Usuario> newData) {
+    public void addToGson(ObservableList<Proveedor> newData) {
         FileWriter flw = null;
 
         Gson gson = new Gson();
@@ -43,7 +49,7 @@ public class ProveedorData {
             e.printStackTrace();
         }
 
-        ObservableList<Usuario> jsonArray = newData;
+        ObservableList<Proveedor> jsonArray = newData;
         gson.toJson(jsonArray, flw);
 
         try {
