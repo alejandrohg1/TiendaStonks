@@ -17,6 +17,7 @@ public class ProductoData {
     public  ObservableList<Producto> productos;
 
     public ProductoData() {
+        productos = FXCollections.observableArrayList();
 
     }
 

@@ -1,11 +1,10 @@
 package Controller;
 
-import DataBase.ProductoData;
 import DataBase.ProveedorData;
+import Pojo.Producto;
 import Pojo.Proveedor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -55,7 +54,7 @@ public class ProveedorRegisterController implements Initializable {
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 
-    public  void initData(Proveedor proveedor,boolean state){
+    public  void initData(Proveedor proveedor, boolean state){
         txtID.setText(proveedor.getIdProveedor());
         txtNombre.setText(proveedor.getNombreProv());
         txtApellido.setText(proveedor.getApellidoProv());

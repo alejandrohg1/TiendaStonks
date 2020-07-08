@@ -82,15 +82,6 @@ public class ProductoController implements Initializable {
     }
     
      @FXML
-    private void refrescar(ActionEvent event) {
-        try {
-            loadData();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-     @FXML
     private void btnNuevoProducto_Action(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/InfoProducto.fxml"));
         Parent root = (Parent) fxmlLoader.load();
@@ -100,6 +91,19 @@ public class ProductoController implements Initializable {
         stage.getIcons().add(new Image("resources/images/iconTienda.png"));
         stage.setTitle("Registrar Producto");
         stage.show();
+    }
+
+    @FXML
+    void buscarProd(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/ProductoTable.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.setTitle("Buscar Producto");
+        stage.show();
+
     }
     
     @FXML
