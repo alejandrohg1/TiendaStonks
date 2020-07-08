@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="605.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.InfoProductoController">
    <children>
-      <Pane prefHeight="767.0" prefWidth="873.0" styleClass="linear-grad" stylesheets="@../Styles/button.css">
+      <Pane layoutY="-14.0" prefHeight="713.0" prefWidth="873.0" styleClass="linear-grad" stylesheets="@../Styles/button.css">
          <children>
             <ImageView fitHeight="111.0" fitWidth="129.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -60,55 +62,19 @@
             </Label>
             <TextField fx:id="txtSeccion" layoutX="560.0" layoutY="294.0" prefHeight="28.0" prefWidth="249.0" />
             <ComboBox fx:id="cboNombreProv" layoutX="140.0" layoutY="467.0" onAction="#llenarDatosProv" prefHeight="31.0" prefWidth="201.0" />
-            <Label layoutX="86.0" layoutY="525.0" prefHeight="28.0" prefWidth="32.0" text="ID:" textFill="#eeeeee">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
             <Label layoutX="28.0" layoutY="469.0" prefHeight="28.0" prefWidth="105.0" text="Nombres:" textFill="#eeeeee">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="txtIDProveedor" layoutX="143.0" layoutY="523.0" prefHeight="31.0" prefWidth="201.0" />
-            <Label layoutX="40.0" layoutY="579.0" prefHeight="28.0" prefWidth="105.0" text="Apellidos:" textFill="#eeeeee">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtapellidoProv" layoutX="143.0" layoutY="578.0" prefHeight="31.0" prefWidth="201.0" />
-            <Label layoutX="405.0" layoutY="537.0" prefHeight="28.0" prefWidth="64.0" text="Correo:" textFill="#eeeeee">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtCorreo" layoutX="489.0" layoutY="532.0" prefHeight="31.0" prefWidth="268.0" />
-            <Label layoutX="424.0" layoutY="582.0" prefHeight="28.0" prefWidth="51.0" text="RUC:" textFill="#eeeeee">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtRUC" layoutX="488.0" layoutY="581.0" />
-            <Label layoutX="43.0" layoutY="628.0" prefHeight="28.0" prefWidth="85.0" text="Telefono:" textFill="#eeeeee">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtTelefono" layoutX="143.0" layoutY="627.0" prefHeight="31.0" prefWidth="201.0" />
-            <Label layoutX="404.0" layoutY="630.0" prefHeight="28.0" prefWidth="64.0" text="Cedula:" textFill="#eeeeee">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtCedula" layoutX="488.0" layoutY="629.0" />
             <ImageView fitHeight="137.0" fitWidth="355.0" layoutX="498.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/images/LogoTienda%20(5).png" />
                </image>
             </ImageView>
             <Button fx:id="btnNuevoProv" layoutX="378.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnNuevoProvAction" styleClass="button3" stylesheets="@../Styles/button.css" text="Nuevo Proveedor" />
-            <Button fx:id="btnGuardar" layoutX="48.0" layoutY="691.0" mnemonicParsing="false" onAction="#btnGuardar_Action" prefHeight="50.0" prefWidth="85.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Guardar" />
-            <Button fx:id="btnCancelar" layoutX="174.0" layoutY="691.0" mnemonicParsing="false" onAction="#btnCancelar_Action" prefHeight="50.0" prefWidth="105.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Cancelar" />
+            <Button fx:id="btnGuardar" layoutX="48.0" layoutY="636.0" mnemonicParsing="false" onAction="#btnGuardar_Action" prefHeight="50.0" prefWidth="85.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Guardar" />
+            <Button fx:id="btnCancelar" layoutX="174.0" layoutY="636.0" mnemonicParsing="false" onAction="#btnCancelar_Action" prefHeight="50.0" prefWidth="105.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Cancelar" />
             <ImageView fx:id="imgProducto" fitHeight="150.0" fitWidth="200.0" layoutX="261.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="512.0" layoutY="349.0" prefHeight="28.0" prefWidth="39.0" text="URL:" textFill="#eeeeee">
                <font>
@@ -116,11 +82,39 @@
                </font>
             </Label>
             <TextField fx:id="txtURL" layoutX="560.0" layoutY="342.0" onKeyPressed="#cargarImgProducto" prefHeight="31.0" prefWidth="249.0" />
-            <Label layoutX="522.0" layoutY="388.0" prefHeight="28.0" prefWidth="296.0" text="(Presione la tecla ENTER para cargar)" textFill="#eeeeee">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
+            <Pane layoutX="33.0" layoutY="522.0" prefHeight="79.0" prefWidth="818.0">
+               <children>
+                  <TableView fx:id="tblProveedor" layoutX="-1.0" layoutY="-5.0" prefHeight="89.0" prefWidth="826.0">
+                    <columns>
+                        <TableColumn fx:id="columnID" prefWidth="45.0" text="ID" />
+                      <TableColumn fx:id="columnNombre" prefWidth="156.0" text="Nombre" />
+                      <TableColumn fx:id="columnApellido" prefWidth="108.0" text="Apellido" />
+                        <TableColumn fx:id="columnTelefono" prefWidth="109.0" text="Telefono" />
+                        <TableColumn fx:id="columnRUC" prefWidth="126.0" text="RUC" />
+                        <TableColumn fx:id="columnCedula" prefWidth="140.0" text="Cedula" />
+                        <TableColumn fx:id="columnCorreo" prefWidth="141.0" text="Correo" />
+                    </columns>
+                  </TableView>
+               </children>
+            </Pane>
+            <Button fx:id="btnExistente" layoutX="592.0" layoutY="400.0" mnemonicParsing="false" onAction="#cargarImagenLocal">
+               <graphic>
+                  <ImageView accessibleRole="BUTTON" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/archivo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnDescargar" layoutX="676.0" layoutY="400.0" mnemonicParsing="false" onAction="#descargarImagen">
+               <graphic>
+                  <ImageView accessibleRole="BUTTON" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/internet.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children></Pane>
    </children>
 </AnchorPane>

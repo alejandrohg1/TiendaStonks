@@ -9,6 +9,7 @@ public class Producto {
     private float precio;
     private String seccion;
     private String idProveedor;
+    private Proveedor proveedor;
 
     public Producto() {
     }
@@ -21,6 +22,7 @@ public class Producto {
         this.precio = precio;
         this.seccion = seccion;
         this.idProveedor = idProveedor;
+        this.proveedor = proveedor;
     }
 
     public String getDescripcion() {
@@ -77,6 +79,22 @@ public class Producto {
 
     public void setIdProveedor(String idProveedor) {
         this.idProveedor = idProveedor;
+    }
+
+    public String getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(String idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     @Override

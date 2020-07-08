@@ -48,8 +48,7 @@ public class ProductoController implements Initializable {
     private Button btnBuscar;
 
     public static ObservableList<Producto> productoObservableList;
-    public ProductoData prodData;
-
+    private ProductoData productoData = new ProductoData();
     
     
     @Override
@@ -62,7 +61,8 @@ public class ProductoController implements Initializable {
     }
     
     public void loadData() throws FileNotFoundException{
-        loadFromGson();
+        productoData.loadFromGson();
+        productoObservableList = FXCollections.observableArrayList(productoData.getProductos());
         flowPaneProducts.getChildren().clear();
         for(Producto p : productoObservableList){
             try
@@ -109,15 +109,5 @@ public class ProductoController implements Initializable {
     @FXML
     public void closeWindow(ActionEvent event) {
        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-    }
-    
-    public void loadFromGson() {
-        Gson gson = new Gson();
-        productoObservableList = FXCollections.observableArrayList();
-        try {
-            productoObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/productos.json").getPath()), Producto[].class)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

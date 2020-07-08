@@ -48,11 +48,11 @@
             </ImageView>
          </graphic>
       </Button>
-      <AnchorPane id="AnchorPane" layoutY="174.0" prefHeight="444.0" prefWidth="1075.0">
+      <AnchorPane id="AnchorPane" layoutY="174.0" prefHeight="481.0" prefWidth="1075.0">
          <children>
             <ScrollPane fx:id="scrollPaneContent" fitToHeight="true" fitToWidth="true" prefHeight="475.0" prefWidth="697.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <FlowPane fx:id="flowPaneProducts" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" prefHeight="510.0" prefWidth="1073.0" style="-fx-background-color: #D3D3D3;" vgap="10.0">
+                  <FlowPane fx:id="flowPaneProducts" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" prefHeight="475.0" prefWidth="1073.0" style="-fx-background-color: #D3D3D3;" vgap="10.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -61,11 +61,11 @@
             </ScrollPane>
          </children>
       </AnchorPane>
-      <Button fx:id="btnBuscar" layoutX="101.0" layoutY="648.0" mnemonicParsing="false" onAction="#buscarProd" prefHeight="31.0" prefWidth="199.0" style="-fx-background-color: #FF0040;" text="Buscar" textFill="WHITE">
+      <Button fx:id="btnBuscar" layoutX="101.0" layoutY="678.0" mnemonicParsing="false" onAction="#buscarProd" prefHeight="31.0" prefWidth="199.0" style="-fx-background-color: #FF0040;" text="Buscar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Button>
-      <Button layoutX="745.0" layoutY="647.0" mnemonicParsing="false" onAction="#btnNuevoProducto_Action" prefHeight="31.0" prefWidth="199.0" style="-fx-background-color: #FF0040;" text="Nuevo Articulo" textFill="WHITE">
+      <Button layoutX="745.0" layoutY="677.0" mnemonicParsing="false" onAction="#btnNuevoProducto_Action" prefHeight="31.0" prefWidth="199.0" style="-fx-background-color: #FF0040;" text="Nuevo Articulo" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Button>

@@ -1,6 +1,7 @@
 package DataBase;
 
 import Pojo.Producto;
+import Pojo.Proveedor;
 import Pojo.Usuario;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
@@ -14,11 +15,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProductoData {
+
     public  ObservableList<Producto> productos;
 
     public ProductoData() {
         productos = FXCollections.observableArrayList();
+    }
 
+    public ObservableList<Producto> getProducto() throws FileNotFoundException{
+        if(productos.isEmpty()){
+            loadFromGson();
+        }
+        return productos;
     }
 
     public void loadFromGson() {
@@ -55,15 +63,6 @@ public class ProductoData {
 
     }
 
-    public ObservableList<Producto> getProductos() {
-
-        return productos;
-    }
-
-    public void updateProductList(){
-        addToGson(productos);
-    }
-
     public List<Producto> getProductsAsList() {
         Gson gson = new Gson();
         List<Producto> products = null;
@@ -75,6 +74,14 @@ public class ProductoData {
         }
         return products;
     }
+    public ObservableList<Producto> getProductos() { return productos; }
 
+    public void updateProductList(){
+        addToGson(productos);
+    }
 
+    public void saveProducto(Producto p) {
+        productos.add(p);
+        addToGson(productos);
+    }
 }
