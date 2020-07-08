@@ -399,7 +399,7 @@ public class VentasController implements Initializable {
     public void  reportPDf() throws IOException, DocumentException {
         String reportName = txtFactura.getText() +".pdf";
         File file = new File("out/production/TiendaStonks/resources/Reporte/"+reportName);
-        //creacion de documento
+        //creacion de documento y tablas
         Document document = new Document();
         FileOutputStream outputStream = new FileOutputStream("out/production/TiendaStonks/resources/Reporte/"+reportName);
         PdfWriter.getInstance(document,outputStream);
