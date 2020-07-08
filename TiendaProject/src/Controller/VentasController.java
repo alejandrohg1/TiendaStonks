@@ -418,13 +418,13 @@ public class VentasController implements Initializable {
         iva.setAlignment(Element.ALIGN_RIGHT);
         document.add(iva);
         Paragraph descuento = new Paragraph("Descuento de: "+cmbDescuento.getValue(),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
-        Paragraph total = new Paragraph("Total Factura: "+txtTotal.getText().substring(0,index),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
+        Paragraph total = new Paragraph("Total Factura: "+txtTotal.getText(),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
         total.setAlignment(Element.ALIGN_RIGHT);
         document.add(total);
         Paragraph saldo = new Paragraph("Saldo: "+txtSaldoCliente.getText(),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
         saldo.setAlignment(Element.ALIGN_RIGHT);
         document.add(saldo);
-        Paragraph cambio = new Paragraph("Cambio Entregado: "+txtCambio.getText().substring(0,indexCambio),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
+        Paragraph cambio = new Paragraph("Cambio Entregado: "+txtCambio.getText(),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
         cambio.setAlignment(Element.ALIGN_RIGHT);
         document.add(cambio);
         Paragraph observaciones = new Paragraph("Observaciones en la Factura: "+txtObservaciones.getText(),FontFactory.getFont(FontFactory.TIMES_BOLD,14));
