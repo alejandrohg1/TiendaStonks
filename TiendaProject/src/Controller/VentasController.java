@@ -5,7 +5,10 @@ import DataBase.ProductoData;
 import Pojo.Factura;
 import Pojo.FacturaTableModel;
 import Pojo.Producto;
-import com.google.gson.Gson;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,39 +16,24 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.scene.control.TextField;
+import net.sf.jasperreports.engine.JRException;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
-import org.omg.PortableInterceptor.INACTIVE;
 
-import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.time.chrono.ChronoLocalDate;
-import java.time.chrono.Chronology;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class VentasController implements Initializable {
     @FXML
@@ -73,7 +61,7 @@ public class VentasController implements Initializable {
     @FXML
     private DatePicker datePickerFactura;
     @FXML
-    private Button buttonCancelar,buttonNuevaFactura,buttonGuardarFac,buttonAdd;
+    private Button buttonCancelar,buttonNuevaFactura,buttonGuardarFac,btnSaldar;
     @FXML
     private ComboBox<String> cmbMoneda;
     @FXML
@@ -150,17 +138,18 @@ public class VentasController implements Initializable {
         cmbMoneda.setItems(listMoneda);
         cmbDescuento.setItems(listDescuento);
         cmbMoneda.getSelectionModel().selectFirst();
+        cmbDescuento.getSelectionModel().selectFirst();
 
     }
 
     public void newFactura(ActionEvent event) {
         Random random = new Random();
         char randomLetter = (char) ((char)random.nextInt(26) + 'A');
-        txtFactura.setText(String.valueOf(random.nextInt(99999))+randomLetter);
+        txtFactura.setText(String.valueOf(random.nextInt(999999))+randomLetter);
         setEditableAllText(true);
         txtProducts.requestFocus();
 
-        productosFactura.clear();
+        productosFactura.removeAll(tblProducto.getItems());
         clearAllText();
 
     }
@@ -276,6 +265,7 @@ public class VentasController implements Initializable {
         txtObservaciones.setEditable(state);
         datePickerFactura.setEditable(state);
 
+
     }
 
     public void clearAllText(){
@@ -326,7 +316,7 @@ public class VentasController implements Initializable {
         productosFactura.clear();
     }
 
-    public void saveFactura(ActionEvent event) {
+    public void saveFactura(ActionEvent event) throws JRException, IOException, DocumentException {
         Factura factura = new Factura();
         List<String> nombreProductos = new ArrayList<>();
         tblProducto.getItems().forEach(producto -> {
@@ -346,9 +336,105 @@ public class VentasController implements Initializable {
 
         facturaData.getFacturas().add(factura);
         facturaData.updateFacturaList();
+        reportPDf();
 
-        clearAllText();
+
+        productosFactura.removeAll(tblProducto.getItems());
 
 
     }
+
+
+    public void  reportPDf() throws IOException, DocumentException {
+        String reportName = txtFactura.getText() +".pdf";
+        File file = new File("out/production/TiendaStonks/resources/Reporte/"+reportName);
+
+        Document document = new Document();
+        FileOutputStream outputStream = new FileOutputStream("out/production/TiendaStonks/resources/Reporte/"+reportName);
+        PdfWriter.getInstance(document,outputStream);
+
+        document.open();
+        Paragraph titulo = new Paragraph("Factura de compras Tienda Stonks",FontFactory.getFont(FontFactory.TIMES_BOLD,26));
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        document.add(titulo);
+        Paragraph subTitulo = new Paragraph("Gracias por comprar en nuestra tienda!!",FontFactory.getFont(FontFactory.TIMES_BOLD,20));
+        subTitulo.setAlignment(Element.ALIGN_CENTER);
+        subTitulo.setSpacingBefore(10);
+        subTitulo.setSpacingAfter(20);
+        document.add(subTitulo);
+        Image image = Image.getInstance("TiendaProject/src/resources/images/LogoTienda (5).png");
+        image.setAlignment(Element.ALIGN_CENTER);
+        document.add(image);
+        Paragraph date = new Paragraph(new Date().toString());
+        date.setAlignment(Element.ALIGN_LEFT);
+        date.setSpacingBefore(10);
+        date.setSpacingAfter(20);
+        document.add(date);
+        Paragraph noFactura = new Paragraph("N0 Factura: "+txtFactura.getText(),FontFactory.getFont(FontFactory.TIMES_BOLD,18));
+        noFactura.setAlignment(Element.ALIGN_LEFT);
+        document.add(noFactura);
+        Paragraph line = new Paragraph("==========================================================================",FontFactory.getFont(FontFactory.TIMES_BOLD));
+        document.add(line);
+
+
+        PdfPTable tabla = new PdfPTable(5);
+        tabla.setSpacingBefore(30);
+        tabla.setSpacingAfter(60);
+        PdfPCell cellCodigo = new PdfPCell(new Paragraph("Codigo"));
+        cellCodigo.setBackgroundColor(BaseColor.MAGENTA);
+        PdfPCell cellCantidad = new PdfPCell(new Paragraph("Cantidad"));
+        cellCantidad.setBackgroundColor(BaseColor.MAGENTA);
+        PdfPCell cellDescripcion = new PdfPCell(new Paragraph("Descripcion"));
+        cellDescripcion.setBackgroundColor(BaseColor.MAGENTA);
+        PdfPCell cellPrecioUni = new PdfPCell(new Paragraph("Precio Unitario"));
+        cellPrecioUni.setBackgroundColor(BaseColor.MAGENTA);
+        PdfPCell cellPrecioTotal = new PdfPCell(new Paragraph("Precio Total"));
+        cellPrecioTotal.setBackgroundColor(BaseColor.MAGENTA);
+
+
+        tabla.addCell(cellCodigo);
+        tabla.addCell(cellCantidad);
+        tabla.addCell(cellDescripcion);
+        tabla.addCell(cellPrecioUni);
+        tabla.addCell(cellPrecioTotal);
+
+        List<PdfPCell> celdas = new ArrayList<>();
+
+        for (FacturaTableModel f: tblProducto.getItems()) {
+            tabla.addCell(f.getCodigo());
+            tabla.addCell(String.valueOf(f.getCantidad()));
+            tabla.addCell(f.getDescripcion());
+            tabla.addCell(String.valueOf(f.getPrecioUni()));
+            tabla.addCell(String.valueOf(f.getPrecioTotal()));
+        }
+
+        int index=txtTotal.getText().indexOf(".");
+        int indexCambio = txtCambio.getText().indexOf(".");
+        document.add(tabla);
+        Paragraph neto = new Paragraph("Neto Factura: "+txtNeto.getText(),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
+        neto.setAlignment(Element.ALIGN_RIGHT);
+        document.add(neto);
+        Paragraph iva = new Paragraph("IVA: 15%",FontFactory.getFont(FontFactory.TIMES_BOLD,16));
+        iva.setAlignment(Element.ALIGN_RIGHT);
+        document.add(iva);
+        Paragraph descuento = new Paragraph("Descuento de: "+cmbDescuento.getValue(),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
+        Paragraph total = new Paragraph("Total Factura: "+txtTotal.getText().substring(0,index),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
+        total.setAlignment(Element.ALIGN_RIGHT);
+        document.add(total);
+        Paragraph saldo = new Paragraph("Saldo: "+txtSaldoCliente.getText(),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
+        saldo.setAlignment(Element.ALIGN_RIGHT);
+        document.add(saldo);
+        Paragraph cambio = new Paragraph("Cambio Entregado: "+txtCambio.getText().substring(0,indexCambio),FontFactory.getFont(FontFactory.TIMES_BOLD,16));
+        cambio.setAlignment(Element.ALIGN_RIGHT);
+        document.add(cambio);
+        Paragraph observaciones = new Paragraph("Observaciones en la Factura: "+txtObservaciones.getText(),FontFactory.getFont(FontFactory.TIMES_BOLD,14));
+        observaciones.setAlignment(Element.ALIGN_LEFT);
+        document.add(observaciones);
+        document.close();
+        System.out.println("reporte creado con exito");
+    }
+
+
 }
+
+
