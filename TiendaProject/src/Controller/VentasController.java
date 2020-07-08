@@ -189,13 +189,21 @@ public class VentasController implements Initializable {
     public void populateTable(ActionEvent event) {
         boolean isRepited = false;
         FacturaTableModel factura = new FacturaTableModel();
-        if(Integer.parseInt(txtCantidad.getText()) > Integer.parseInt(productoSelected.getStock())){
+        try{
+            if(Integer.parseInt(txtCantidad.getText()) > Integer.parseInt(productoSelected.getStock())){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Cantidad mayor a la que proviene de stock");
+                alert.setTitle("Error de stock");
+                alert.showAndWait();
+                return;
+            }
+        }catch (NumberFormatException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Cantidad mayor a la que proviene de stock");
-            alert.setTitle("Error de stock");
+            alert.setContentText("Ningun Producto fue ingresado o Cantidad no Valida");
+            alert.setTitle("Error de Entrada");
             alert.showAndWait();
-            return;
         }
+
         try{
 
             factura.setCantidad(Integer.parseInt(txtCantidad.getText()));
@@ -284,9 +292,16 @@ public class VentasController implements Initializable {
 
 
     public void saldarCuenta(ActionEvent event) {
+        try {
+            float cambio = Float.parseFloat(txtSaldoCliente.getText()) - Float.parseFloat(txtTotal.getText());
+            txtCambio.setText(String.valueOf(cambio));
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Saldo Invalido");
+            alert.setContentText("Ingrese el saldo del cliente para poder continuar");
+            alert.showAndWait();
+        }
 
-        float cambio = Float.parseFloat(txtSaldoCliente.getText()) - Float.parseFloat(txtTotal.getText());
-        txtCambio.setText(String.valueOf(cambio));
     }
 
     public void listenerContextMenu(){
@@ -318,28 +333,64 @@ public class VentasController implements Initializable {
 
     public void saveFactura(ActionEvent event) throws JRException, IOException, DocumentException {
         Factura factura = new Factura();
-        List<String> nombreProductos = new ArrayList<>();
-        tblProducto.getItems().forEach(producto -> {
-            nombreProductos.add(producto.getDescripcion());
-        });
+        if(txtPrecio.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de Factura");
+            alert.setContentText("Agrege una nueva factura para poder Guardar");
+            alert.showAndWait();
+        }else if(txtSaldoCliente.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Saldo Invalido");
+            alert.setContentText("Ingrese el saldo del cliente para poder continuar");
+            alert.showAndWait();
+        }else{
+            List<String> nombreProductos = new ArrayList<>();
+            tblProducto.getItems().forEach(producto -> {
+                nombreProductos.add(producto.getDescripcion());
+            });
 
-        factura.setObservaciones(txtObservaciones.getText());
-        factura.setCodigoFactura(txtFactura.getText());
-        factura.setFechaDeFacturacion(datePickerFactura.getValue().toString());
-        factura.setDescuento(cmbDescuento.getValue());
-        factura.setMonedaCambio(cmbMoneda.getValue());
-        factura.setCambio(Float.parseFloat(txtCambio.getText()));
-        factura.setNeto(Float.parseFloat(txtNeto.getText()));
-        factura.setSaldo(Float.parseFloat(txtSaldoCliente.getText()));
-        factura.setTotal(Float.parseFloat(txtTotal.getText()));
-        factura.setProductosFactura(nombreProductos);
+            try {
+                String fecha = datePickerFactura.getValue().toString();
+            }catch (NullPointerException e){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Fecha Invalida");
+                alert.setContentText("Fecha no valida o no ingresada");
+                alert.showAndWait();
+                return;
+            }
+                factura.setObservaciones(txtObservaciones.getText());
+                factura.setCodigoFactura(txtFactura.getText());
+                factura.setFechaDeFacturacion(datePickerFactura.getValue().toString());
+                factura.setDescuento(cmbDescuento.getValue());
+                factura.setMonedaCambio(cmbMoneda.getValue());
+                if(Float.parseFloat(txtCambio.getText())<0){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Cambio invalido");
+                    alert.setContentText("No puede quedar negativo el cambio");
+                    alert.showAndWait();
+                    return;
+                }
+                factura.setCambio(Float.parseFloat(txtCambio.getText()));
+                factura.setNeto(Float.parseFloat(txtNeto.getText()));
+                factura.setSaldo(Float.parseFloat(txtSaldoCliente.getText()));
+                factura.setTotal(Float.parseFloat(txtTotal.getText()));
+                factura.setProductosFactura(nombreProductos);
 
-        facturaData.getFacturas().add(factura);
-        facturaData.updateFacturaList();
-        reportPDf();
+                facturaData.getFacturas().add(factura);
+                facturaData.updateFacturaList();
+                reportPDf();
+
+                productosFactura.removeAll(tblProducto.getItems());
+                clearAllText();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Factura Guardada");
+                alert.setContentText("Se guardo la Factura en "+"out/production/TiendaStonks/resources/Reporte/"+txtFactura.getText()+"pdf");
+                alert.show();
+
+        }
 
 
-        productosFactura.removeAll(tblProducto.getItems());
 
 
     }
@@ -348,7 +399,7 @@ public class VentasController implements Initializable {
     public void  reportPDf() throws IOException, DocumentException {
         String reportName = txtFactura.getText() +".pdf";
         File file = new File("out/production/TiendaStonks/resources/Reporte/"+reportName);
-
+        //creacion de documento y tablas
         Document document = new Document();
         FileOutputStream outputStream = new FileOutputStream("out/production/TiendaStonks/resources/Reporte/"+reportName);
         PdfWriter.getInstance(document,outputStream);
