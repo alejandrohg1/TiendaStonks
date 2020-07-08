@@ -2,8 +2,6 @@ package Controller;
 
 import DataBase.FacturaData;
 import Pojo.Factura;
-import Pojo.FacturaTableModel;
-import Pojo.Usuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -104,4 +102,6 @@ public class FacturaSceneController implements Initializable {
 
 
     }
+
+
 }
