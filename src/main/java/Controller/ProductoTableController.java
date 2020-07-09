@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -137,9 +138,7 @@ public class ProductoTableController implements Initializable {
         if (tblProductos.getSelectionModel().getSelectedItem() == null) {
             return;
         } else {
-            String foto = tblProductos.getSelectionModel().getSelectedItem().getFotoUrl();
-            System.out.println(foto);
-            imgProducto.setImage(new Image(foto));
+            imgProducto.setImage(new Image(new File(tblProductos.getSelectionModel().getSelectedItem().getFotoUrl()).toURI().toString()));
             imgProducto.resize(200,300);
         }
         tblProductos.getSelectionModel().getSelectedItem();

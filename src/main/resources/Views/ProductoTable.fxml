@@ -21,7 +21,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/images/shopping-basket_icon-icons.png" />
+                  <Image url="@../Images/shopping-basket_icon-icons.png" />
                </image>
             </ImageView>
             <Label layoutX="198.0" layoutY="121.0" text="Busqueda de Articulos" textFill="WHITE">
@@ -65,7 +65,7 @@
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/seo-social-web-network-internet_340_icon-icons.com_61497.png" />
+                              <Image url="@../Images/seo-social-web-network-internet_340_icon-icons.com_61497.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -82,7 +82,7 @@
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/images/1486564399-close_81512.png" />
+                  <Image url="@../Images/1486564399-close_81512.png" />
                </image>
             </ImageView>
          </graphic>
