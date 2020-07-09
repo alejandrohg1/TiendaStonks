@@ -281,6 +281,8 @@ public class ProveedoresController implements Initializable {
             }
         });
         return productos;
+
+
     }
 
     @FXML

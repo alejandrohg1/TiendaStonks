@@ -96,7 +96,7 @@
                </font>
             </Label>
             <TextField fx:id="txtTotal" editable="false" layoutX="272.0" layoutY="37.0" prefHeight="25.0" prefWidth="128.0" styleClass="text-fieldVenta" stylesheets="@../Styles/textfield.css" />
-            <Button layoutX="496.0" layoutY="37.0" mnemonicParsing="false" onAction="#saldarCuenta" text="Saldar" />
+            <Button fx:id="btnSaldar" layoutX="496.0" layoutY="37.0" mnemonicParsing="false" onAction="#saldarCuenta" text="Saldar" />
             <TextField fx:id="txtSaldoCliente" layoutX="563.0" layoutY="37.0" styleClass="text-fieldVenta" stylesheets="@../Styles/textfield.css" />
             <Label layoutX="563.0" layoutY="16.0" text="Saldo del Cliente">
                <font>
