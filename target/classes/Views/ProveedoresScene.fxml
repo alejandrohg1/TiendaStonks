@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="anchorPaneMain" prefHeight="733.0" prefWidth="1070.0" style="-fx-background-color: white" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProveedoresController">
+   <children>
+      <Pane layoutY="49.0" prefHeight="108.0" prefWidth="1070.0" style="-fx-background-color: #457b9d">
+         <children>
+            <Label layoutX="152.0" layoutY="36.0" text="Proveedores" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="85.0" fitWidth="99.0" layoutX="35.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/ic-vendor_97612%20(1).png" />
+               </image>
+            </ImageView>
+            <Label layoutX="830.0" layoutY="68.0" text="Control de Proveedores" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <Label layoutX="14.0" layoutY="25.0" text="Get more, Pay Less ♥" />
+      <Button layoutX="1017.0" layoutY="9.0" mnemonicParsing="false" onAction="#closeWindow" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/1486564399-close_81512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <BorderPane layoutX="54.0" layoutY="201.0" prefHeight="464.0" prefWidth="882.0">
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <TableView fx:id="tblProveedores" onContextMenuRequested="#getProveedor" onMouseClicked="#getProveedor" onMouseEntered="#refreshTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@../Styles/tableView.css">
+                    <columns>
+                      <TableColumn fx:id="columnId" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="columnNombre" prefWidth="75.0" text="Nombre" />
+                        <TableColumn fx:id="columnApellido" prefWidth="75.0" text="Apellido" />
+                        <TableColumn fx:id="columnCedula" prefWidth="75.0" text="Cedula" />
+                        <TableColumn fx:id="columnCorreo" prefWidth="75.0" text="Correo" />
+                        <TableColumn fx:id="columnTelefono" prefWidth="75.0" text="Telefono" />
+                        <TableColumn fx:id="columnRuc" prefWidth="75.0" text="RUC" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </GridPane>
+         </center>
+         <top>
+            <Pane prefHeight="44.0" prefWidth="882.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button layoutX="466.0" layoutY="5.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/seo-social-web-network-internet_340_icon-icons.com_61497.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <TextField fx:id="txtProveedor" layoutX="5.0" layoutY="10.0" prefHeight="25.0" prefWidth="453.0" promptText="Buscar Proveedores..." styleClass="text-fieldProveedor" stylesheets="@../Styles/textfield.css" />
+                  <Button layoutX="698.0" layoutY="10.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="25.0" prefWidth="177.0" styleClass="button4" stylesheets="@../Styles/button.css" text="Añadir Proveedor">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/more_13201%20(1).png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+               </children>
+            </Pane>
+         </top>
+      </BorderPane>
+      <Button layoutX="54.0" layoutY="681.0" mnemonicParsing="false" onAction="#InfoProveedor" styleClass="button4" stylesheets="@../Styles/button.css" text="Ver Informacion del Proveedor" />
+      <Button layoutX="841.0" layoutY="681.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="25.0" prefWidth="106.0" styleClass="button4" stylesheets="@../Styles/button.css" text="Volver al Login" />
+      <Button fx:id="buttonEditar" layoutX="245.0" layoutY="681.0" mnemonicParsing="false" onAction="#editUser" prefHeight="25.0" prefWidth="112.0" styleClass="button4" stylesheets="@../Styles/button.css" text="Editar Proveedor" />
+      <Button layoutX="374.0" layoutY="681.0" mnemonicParsing="false" onAction="#eliminarProveedor" styleClass="button4" stylesheets="@../Styles/button.css" text="Eliminar Proveedor" />
+   </children>
+</AnchorPane>

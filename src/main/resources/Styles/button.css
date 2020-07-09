@@ -1,0 +1,124 @@
+#windows {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-border-color: #168FC1;
+    -fx-background-color: #168FC1;
+}
+
+#windows:hover {
+    -fx-background-color: #0B729C;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: #168FC1;
+}
+
+#buttonMenu {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: normal;
+    -fx-font-size: 15;
+    -fx-cursor: hand;
+}
+
+#buttonMenu:hover {
+    -fx-background-color: #7561e6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: #7561e6;
+    -fx-font-size: 15;
+    -fx-cursor: hand;
+}
+
+.button1 {
+    -fx-background-color: #6f4cbb;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.button1:hover {
+    -fx-text-fill: #431fa0;
+    -fx-cursor: hand;
+}
+
+.button1:pressed {
+    -fx-text-fill: #371897;
+    -fx-cursor: hand;
+}
+
+.linear-grad {
+    -fx-background-color: linear-gradient(to bottom left, #6f4cbb, #431fa0);
+}
+#linear-gradProveedor{
+    -fx-background-color: linear-gradient(to bottom left,#457b9d,#5390d9);
+}
+
+.buttonUser {
+    -fx-background-color: #9229f5;
+    -fx-text-fill: white;
+    -fx-font-weight: normal;
+    -fx-font-size: 12;
+    -fx-cursor: hand;
+}
+
+.buttonUser:hover {
+    -fx-background-color: #6f4cbb;
+    -fx-text-fill: white;
+    -fx-font-weight: normal;
+    -fx-font-size: 12;
+    -fx-cursor: hand;
+}
+
+#buttonBuscar {
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+
+#buttonBuscar:hover {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.table-view {
+    -fx-background-color: #6f4cbb;
+}
+
+.button3 {
+    -fx-background-color: #D100D1;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+}
+
+.button3:hover {
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+}
+
+.button3:pressed {
+    -fx-text-fill: whitesmoke;
+    -fx-font-size: 15;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.button4 {
+    -fx-background-color: #457b9d;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.button4:hover {
+    -fx-text-fill: #431fa0;
+    -fx-cursor: hand;
+}
+
+.button4:pressed {
+    -fx-text-fill: #371897;
+    -fx-cursor: hand;
+}
+
+
