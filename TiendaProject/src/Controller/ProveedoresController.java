@@ -282,4 +282,10 @@ public class ProveedoresController implements Initializable {
         });
         return productos;
     }
+
+    @FXML
+    void probar(ActionEvent event) {
+        String folderPath = System.getProperty("/resources/productos");
+        System.out.println(folderPath);
+    }
 }

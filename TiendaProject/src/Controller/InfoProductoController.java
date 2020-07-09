@@ -26,7 +26,10 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -34,6 +37,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -77,6 +82,8 @@ public class InfoProductoController implements Initializable {
     private Button btnDescargar;
     @FXML
     private Button btnNuevoProv;
+    @FXML
+    private Label lblNombre;
 
     @FXML
     private ImageView imgProducto;
@@ -95,6 +102,7 @@ public class InfoProductoController implements Initializable {
     private Image icon = null;
     private File selectedImage;
 
+
     /**
      * Initializes the controller class.
      */
@@ -108,7 +116,7 @@ public class InfoProductoController implements Initializable {
         }
     }    
     
-    private void loadData() throws FileNotFoundException{
+    public void loadData() throws FileNotFoundException{
         proveedorData.loadFromGson();
         productoData.loadFromGson();
         prodTemp = FXCollections.observableArrayList(productoData.getProductos());
@@ -116,12 +124,30 @@ public class InfoProductoController implements Initializable {
         llenarItems();
     }    
     @FXML
-    private void btnNuevoProvAction(ActionEvent event) {
-
+    private void btnNuevoProvAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/ProveedorRegister.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.setTitle("Registrar Proveedor");
+        stage.show();
+        ProveedorRegisterController temp = fxmlLoader.getController();
+        temp.isStageProducto(true);
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 
     @FXML
     private void btnGuardar_Action(ActionEvent event) throws IOException {
+        if(txtDescripcion.getText().isEmpty() || txtURL.getText().isEmpty() || txtIDProducto.getText().isEmpty() || txtPrecio.getText().isEmpty() || txtSeccion.getText().isEmpty() || txtStock.getText().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Guardar Producto");
+            a.setContentText("Por Favor Ingrese todos los Datos");
+            a.showAndWait();
+            return;
+        }
+
         if(isEdit){
             for(int i = 0; i < prodTemp.size(); i++){
                 if(prodTemp.get(i).getIdprducto().equals(this.editado.getIdprducto())){
@@ -132,7 +158,9 @@ public class InfoProductoController implements Initializable {
                     prodTemp.get(i).setSeccion(txtSeccion.getText());
                     prodTemp.get(i).setStock(txtStock.getText());
                     if(txtURL.getText() != prodTemp.get(i).getFotoUrl()){
-                        saveToFile(imgProducto.getImage());
+                        saveToFile(imgProducto);
+                        String folderPath = "C:/GitHubVictor/TiendaStonks/TiendaProject/src/resources/productos"+txtDescripcion.getText()+".png";
+                        prodTemp.get(i).setFotoUrl(folderPath);
                     }
                 }   
             }
@@ -145,17 +173,23 @@ public class InfoProductoController implements Initializable {
         }else{
             Producto nuevo = new Producto();
             Proveedor datosProv = new Proveedor();
+            datosProv = tblProveedor.getSelectionModel().getSelectedItem();
             nuevo.setDescripcion(txtDescripcion.getText());
-            nuevo.setIdProveedor(cboNombreProv.getSelectionModel().getSelectedItem());
+            nuevo.setIdProveedor(datosProv.getIdProveedor());
             nuevo.setIdprducto(txtIDProducto.getText());
             nuevo.setPrecio(Float.parseFloat(txtPrecio.getText()));
             nuevo.setSeccion(txtSeccion.getText());
             nuevo.setStock(txtStock.getText());
             nuevo.setFotoUrl(txtURL.getText());
-            datosProv = tblProveedor.getSelectionModel().getSelectedItem();
             nuevo.setProveedor(datosProv);
             productoData.saveProducto(nuevo);
-            saveToFile(imgProducto.getImage());
+            if(txtURL.getText().isEmpty()){
+                icon = new Image(getClass().getResourceAsStream("/resources/images/iconTienda.png"));
+                imgProducto.setImage(icon);
+                saveToFile(imgProducto);
+            }else{
+                saveToFile(imgProducto);
+            }
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Guardar Producto");
             a.setContentText("Se guardo Exitosamente");
@@ -180,32 +214,23 @@ public class InfoProductoController implements Initializable {
         }
         });
     }
-    
-    private void llenarItems(){
-        Nombres.clear();
-        provTemp.forEach(p -> {
-            Nombres.add(p.getNombreProv());
-        });
-        cboNombreProv.setItems(Nombres);
-    }
-    
+
     @FXML
     private void llenarDatosProv(ActionEvent event){
-
             for (int i = 0; i < provTemp.size(); i++){
                 if(cboNombreProv.getSelectionModel().getSelectedItem().equals(provTemp.get(i).getNombreProv())){
-                    System.out.println(seleccionado.size());
+                    System.out.println(seleccionado.size() - 1);
                     if(seleccionado.size() == 0){
                         seleccionado.add(provTemp.get(i));
                     }else{
-                        seleccionado.remove(0);
+                        seleccionado.clear();
                         seleccionado.add(provTemp.get(i));
                     }
                 }
             }
             tblProveedor.setItems(seleccionado);
     }
-    
+
     @FXML
     private void cargarImgProducto(KeyEvent event) throws IOException {
         if(event.getCode().equals(event.getCode().ENTER)){
@@ -227,21 +252,16 @@ public class InfoProductoController implements Initializable {
     }
 
     @FXML
-    void cargarImagenLocal(ActionEvent event) {
+    void cargarImagenLocal(ActionEvent event) throws IllegalArgumentException, IOException  {
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG", "*.png"));
+        File selectedImage = fc.showOpenDialog(null);
+        if (selectedImage == null)
+            return;
+        Image img = SwingFXUtils.toFXImage(ImageIO.read(selectedImage), null);
+        imgProducto.setImage(img);
+        txtURL.setText(selectedImage.getPath());
 
-        try {
-            FileChooser fc = new FileChooser();
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files (*.jpg, *.jpeg, *.jpe, *.jfif, .png)", ".jpg",".jpeg",".jpe",".jfif",".png");
-            fc.getExtensionFilters().add(extFilter);
-            selectedImage = fc.showOpenDialog(null);
-            Image img = null;
-            img = SwingFXUtils.toFXImage(ImageIO.read(selectedImage), null);
-            imgProducto.setImage(img);
-            txtURL.setText(selectedImage.getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("No se pudo cargar el archivo");
-        }
 
     }
 
@@ -262,6 +282,24 @@ public class InfoProductoController implements Initializable {
             imgProducto.setImage(SwingFXUtils.toFXImage(image, null));
             System.out.println("Se cargo exitosamente la imagen");
         }
+    }
+
+    public void setNewProveedor() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/InfoProducto.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.setTitle("Registrar Producto");
+        stage.show();
+    }
+
+    public void llenarItems(){
+            cboNombreProv.getItems().clear();
+            provTemp.forEach(p -> {
+                cboNombreProv.getItems().add(p.getNombreProv());
+            });
     }
 
     public void starColumns(){
@@ -285,6 +323,10 @@ public class InfoProductoController implements Initializable {
         //cboNombreProv.setEditable(state);
         //cboNombreProv.disabledProperty();
         txtIDProducto.setEditable(state);
+        btnNuevoProv.setVisible(state);
+        cboNombreProv.setVisible(state);
+        lblNombre.setVisible(state);
+
     }
     public void editProducto(Producto p, boolean state){
         isEdit = true;
@@ -296,14 +338,21 @@ public class InfoProductoController implements Initializable {
         txtIDProducto.setText(p.getIdprducto());
         txtURL.setText(p.getFotoUrl());
         imgProducto.setImage(new Image(p.getFotoUrl()));
-        //cargar los datos del proveedor de este producto en la tabla
         this.editado = p;
+        if(seleccionado.size() == 0){
+            seleccionado.add(p.getProveedor());
+            tblProveedor.setItems(seleccionado);
+        }else{
+            seleccionado.remove(0);
+            seleccionado.add(p.getProveedor());
+            tblProveedor.setItems(seleccionado);
+        }
     }
 
-    public void saveToFile(Image image) throws IOException {
-        String folderPath = "/src/resources/productos/";
-        File imageFile = new File(folderPath, txtURL.getText() + ".png");
-        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+    public void saveToFile(ImageView image) throws IOException {
+        String folderPath = "C:/GitHubVictor/TiendaStonks/TiendaProject/src/resources/productos";
+        File imageFile = new File(folderPath, txtDescripcion.getText() + ".png");
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image.getImage(), null);
         ImageIO.write(bImage, "png", imageFile);
     }
 }

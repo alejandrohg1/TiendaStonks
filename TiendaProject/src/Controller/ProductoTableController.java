@@ -122,6 +122,7 @@ public class ProductoTableController implements Initializable {
                         productoData.getProductos().removeAll(getProductList(tblProductos.getSelectionModel().getSelectedItem()));
                         productoData.addToGson(productos);
                         productoData.updateProductList();
+
                     }
                 } else if (response == cancelar) {
                     a.close();
@@ -132,10 +133,17 @@ public class ProductoTableController implements Initializable {
     }
 
     @FXML
-    void getProveedor(MouseEvent event) {
+    void getProducto(MouseEvent event) {
+        if (tblProductos.getSelectionModel().getSelectedItem() == null) {
+            return;
+        } else {
+            String foto = tblProductos.getSelectionModel().getSelectedItem().getFotoUrl();
+            System.out.println(foto);
+            imgProducto.setImage(new Image(foto));
+            imgProducto.resize(200,300);
+        }
         tblProductos.getSelectionModel().getSelectedItem();
     }
-
     @FXML
     void refreshTable(MouseEvent event) {
         tblProductos.refresh();
@@ -188,17 +196,6 @@ public class ProductoTableController implements Initializable {
         SortedList<Producto> sortedList = new SortedList<>(filteredProductos);
         sortedList.comparatorProperty().bind(tblProductos.comparatorProperty());
         tblProductos.setItems(sortedList);
-    }
-
-    public void getProducto(MouseEvent event) {
-        tblProductos.getSelectionModel().getSelectedItem();
-        if (tblProductos.getSelectionModel().getSelectedItem() == null) {
-            return;
-        } else {
-            String foto = tblProductos.getSelectionModel().getSelectedItem().getFotoUrl();
-            imgProducto.setImage(new Image(foto));
-            imgProducto.resize(200,300);
-        }
     }
 
     public ObservableList<Producto>  getProductList(Producto proveedors){

@@ -61,8 +61,8 @@
                </font>
             </Label>
             <TextField fx:id="txtSeccion" layoutX="560.0" layoutY="294.0" prefHeight="28.0" prefWidth="249.0" />
-            <ComboBox fx:id="cboNombreProv" layoutX="140.0" layoutY="467.0" onAction="#llenarDatosProv" prefHeight="31.0" prefWidth="201.0" />
-            <Label layoutX="28.0" layoutY="469.0" prefHeight="28.0" prefWidth="105.0" text="Nombres:" textFill="#eeeeee">
+            <ComboBox fx:id="cboNombreProv" layoutX="140.0" layoutY="464.0" onAction="#llenarDatosProv" prefHeight="31.0" prefWidth="201.0" />
+            <Label fx:id="lblNombre" layoutX="28.0" layoutY="466.0" prefHeight="28.0" prefWidth="105.0" text="Nombres:" textFill="#eeeeee">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -72,7 +72,7 @@
                   <Image url="@../resources/images/LogoTienda%20(5).png" />
                </image>
             </ImageView>
-            <Button fx:id="btnNuevoProv" layoutX="378.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnNuevoProvAction" styleClass="button3" stylesheets="@../Styles/button.css" text="Nuevo Proveedor" />
+            <Button fx:id="btnNuevoProv" layoutX="378.0" layoutY="464.0" mnemonicParsing="false" onAction="#btnNuevoProvAction" styleClass="button3" stylesheets="@../Styles/button.css" text="Nuevo Proveedor" />
             <Button fx:id="btnGuardar" layoutX="48.0" layoutY="636.0" mnemonicParsing="false" onAction="#btnGuardar_Action" prefHeight="50.0" prefWidth="85.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Guardar" />
             <Button fx:id="btnCancelar" layoutX="174.0" layoutY="636.0" mnemonicParsing="false" onAction="#btnCancelar_Action" prefHeight="50.0" prefWidth="105.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Cancelar" />
             <ImageView fx:id="imgProducto" fitHeight="150.0" fitWidth="200.0" layoutX="261.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" />

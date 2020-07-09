@@ -42,7 +42,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TableView fx:id="tblProductos" onContextMenuRequested="#getProveedor" onMouseClicked="#getProveedor" onMouseEntered="#refreshTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@../Styles/tableView.css">
+                  <TableView fx:id="tblProductos" onContextMenuRequested="#getProducto" onMouseClicked="#getProducto" onMouseEntered="#refreshTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@../Styles/tableView.css">
                      <columns>
                         <TableColumn fx:id="columnIdProducto" prefWidth="124.0" text="ID Producto" />
                         <TableColumn fx:id="columnidProveedor" prefWidth="133.0" text="ID Proveedor" />

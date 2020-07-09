@@ -30,6 +30,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.imageio.ImageIO;
@@ -111,8 +112,10 @@ public class ProductoTemplateController implements Initializable {
         stage.setScene(new Scene(root));
         stage.getIcons().add(new Image("resources/images/iconTienda.png"));
         stage.setTitle("Editar Producto");
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
         InfoProductoController temp = fxmlLoader.getController();
         temp.editProducto(producto, state);
+
     }
 }
