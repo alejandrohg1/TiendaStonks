@@ -7,6 +7,7 @@ package Controller;
 
 import Pojo.Producto;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -82,7 +83,7 @@ public class ProductoTemplateController implements Initializable {
         lblProductSection.setText("Seccion: " + producto.getSeccion());
         lblProductCantidad.setText(String.valueOf("Cantidad: " + producto.getStock()));
         lblProductPrecio.setText(String.valueOf("Precio: C$" + producto.getPrecio()));
-        imgvProduct.setImage(new Image(producto.getFotoUrl()));
+        imgvProduct.setImage(new Image(new File(producto.getFotoUrl()).toURI().toString()));
     }
     
     @Override
@@ -110,7 +111,7 @@ public class ProductoTemplateController implements Initializable {
         Stage stage = new Stage();
         stage.initStyle(StageStyle.DECORATED);
         stage.setScene(new Scene(root));
-        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/iconTienda.png")));
         stage.setTitle("Editar Producto");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();

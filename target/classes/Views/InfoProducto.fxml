@@ -14,14 +14,14 @@
 
 <AnchorPane id="AnchorPane" prefHeight="605.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.InfoProductoController">
    <children>
-      <Pane layoutY="-14.0" prefHeight="713.0" prefWidth="873.0" styleClass="linear-grad" stylesheets="@../Styles/button.css">
+      <Pane prefHeight="699.0" prefWidth="873.0" styleClass="linear-grad" stylesheets="@../Styles/button.css">
          <children>
-            <ImageView fitHeight="111.0" fitWidth="129.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="111.0" fitWidth="129.0" layoutX="37.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/images/shopping-basket_icon-icons.png" />
+                  <Image url="@../Images/shopping-basket_icon-icons.png" />
                </image>
             </ImageView>
-            <Label layoutX="168.0" layoutY="30.0" prefHeight="50.0" prefWidth="227.0" text="Datos del Producto" textFill="#dd00ff">
+            <Label layoutX="199.0" layoutY="45.0" prefHeight="50.0" prefWidth="227.0" text="Datos del Producto" textFill="#dd00ff">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -69,13 +69,13 @@
             </Label>
             <ImageView fitHeight="137.0" fitWidth="355.0" layoutX="498.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/images/LogoTienda%20(5).png" />
+                  <Image url="@../Images/LogoTienda%20(2).png" />
                </image>
             </ImageView>
             <Button fx:id="btnNuevoProv" layoutX="378.0" layoutY="464.0" mnemonicParsing="false" onAction="#btnNuevoProvAction" styleClass="button3" stylesheets="@../Styles/button.css" text="Nuevo Proveedor" />
             <Button fx:id="btnGuardar" layoutX="48.0" layoutY="636.0" mnemonicParsing="false" onAction="#btnGuardar_Action" prefHeight="50.0" prefWidth="85.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Guardar" />
             <Button fx:id="btnCancelar" layoutX="174.0" layoutY="636.0" mnemonicParsing="false" onAction="#btnCancelar_Action" prefHeight="50.0" prefWidth="105.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Cancelar" />
-            <ImageView fx:id="imgProducto" fitHeight="150.0" fitWidth="200.0" layoutX="261.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgProducto" fitHeight="150.0" fitWidth="200.0" layoutX="262.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="512.0" layoutY="349.0" prefHeight="28.0" prefWidth="39.0" text="URL:" textFill="#eeeeee">
                <font>
                   <Font name="System Bold" size="17.0" />
@@ -101,7 +101,7 @@
                <graphic>
                   <ImageView accessibleRole="BUTTON" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/images/archivo.png" />
+                        <Image url="@../Images/archivo.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -110,11 +110,12 @@
                <graphic>
                   <ImageView accessibleRole="BUTTON" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/images/internet.png" />
+                        <Image url="@../Images/internet.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
+            <Button layoutX="634.0" layoutY="152.0" mnemonicParsing="false" onAction="#printURL" text="Button" />
          </children></Pane>
    </children>
 </AnchorPane>

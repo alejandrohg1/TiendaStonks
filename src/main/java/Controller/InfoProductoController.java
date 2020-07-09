@@ -92,12 +92,11 @@ public class InfoProductoController implements Initializable {
     
     public static ObservableList<Producto> prodTemp;
     public static ObservableList<Proveedor> provTemp;
-    private ObservableList<String> Nombres = FXCollections.observableArrayList();
-    private boolean isEdit;
-    private Producto editado;
-    private ObservableList<Proveedor>seleccionado = FXCollections.observableArrayList();
     private ProveedorData proveedorData = new ProveedorData();
     private ProductoData productoData = new ProductoData();
+    private ObservableList<Proveedor>seleccionado = FXCollections.observableArrayList();
+    private boolean isEdit;
+    private Producto editado;
     private BufferedImage image = null;
     private Image icon = null;
     private File selectedImage;
@@ -140,7 +139,7 @@ public class InfoProductoController implements Initializable {
 
     @FXML
     private void btnGuardar_Action(ActionEvent event) throws IOException {
-        if(txtDescripcion.getText().isEmpty() || txtURL.getText().isEmpty() || txtIDProducto.getText().isEmpty() || txtPrecio.getText().isEmpty() || txtSeccion.getText().isEmpty() || txtStock.getText().isEmpty()){
+        if(txtDescripcion.getText().isEmpty() || txtIDProducto.getText().isEmpty() || txtPrecio.getText().isEmpty() || txtSeccion.getText().isEmpty() || txtStock.getText().isEmpty()){
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setTitle("Guardar Producto");
             a.setContentText("Por Favor Ingrese todos los Datos");
@@ -158,10 +157,9 @@ public class InfoProductoController implements Initializable {
                     prodTemp.get(i).setSeccion(txtSeccion.getText());
                     prodTemp.get(i).setStock(txtStock.getText());
                     if(txtURL.getText() != prodTemp.get(i).getFotoUrl()){
-                        saveToFile(imgProducto);
-                        String folderPath = "C:/GitHubVictor/TiendaStonks/TiendaProject/src/resources/productos"+txtDescripcion.getText()+".png";
-                        prodTemp.get(i).setFotoUrl(folderPath);
+                        prodTemp.get(i).setFotoUrl(getImagePath());
                     }
+                    saveToFile(imgProducto);
                 }   
             }
             productoData.addToGson(prodTemp);
@@ -180,16 +178,8 @@ public class InfoProductoController implements Initializable {
             nuevo.setPrecio(Float.parseFloat(txtPrecio.getText()));
             nuevo.setSeccion(txtSeccion.getText());
             nuevo.setStock(txtStock.getText());
-            nuevo.setFotoUrl(txtURL.getText());
             nuevo.setProveedor(datosProv);
             productoData.saveProducto(nuevo);
-            if(txtURL.getText().isEmpty()){
-                icon = new Image(getClass().getResourceAsStream("/resources/images/iconTienda.png"));
-                imgProducto.setImage(icon);
-                saveToFile(imgProducto);
-            }else{
-                saveToFile(imgProducto);
-            }
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Guardar Producto");
             a.setContentText("Se guardo Exitosamente");
@@ -235,52 +225,40 @@ public class InfoProductoController implements Initializable {
     private void cargarImgProducto(KeyEvent event) throws IOException {
         if(event.getCode().equals(event.getCode().ENTER)){
             try {
-            image = ImageIO.read(new URL(txtURL.getText()));            
+                image = ImageIO.read(new URL(txtURL.getText()));
+                imgProducto.setImage(SwingFXUtils.toFXImage(image, null));
+                System.out.println("Se cargo exitosamente la imagen");
             } catch (MalformedURLException ex) {
                 Logger.getLogger(ProductoTemplateController.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("no se hallo imagen");
             }
-            if(image == null){
-                icon = new Image(getClass().getResourceAsStream("/resources/images/iconTienda.png"));
-                imgProducto.setImage(icon);
-            }else{
-                imgProducto.setImage(SwingFXUtils.toFXImage(image, null));
-                System.out.println("Se cargo exitosamente la imagen");
-            }
-            
         }
     }
 
     @FXML
     void cargarImagenLocal(ActionEvent event) throws IllegalArgumentException, IOException  {
         FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG", "*.png"));
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG", "*.png", "*.jpg", "*.jpeg"));
         File selectedImage = fc.showOpenDialog(null);
         if (selectedImage == null)
             return;
         Image img = SwingFXUtils.toFXImage(ImageIO.read(selectedImage), null);
         imgProducto.setImage(img);
         txtURL.setText(selectedImage.getPath());
-
-
     }
 
     @FXML
     void descargarImagen(ActionEvent event) {
         try {
             image = ImageIO.read(new URL(txtURL.getText()));
+            imgProducto.setImage(SwingFXUtils.toFXImage(image, null));
+            System.out.println("Se cargo exitosamente la imagen");
         } catch (MalformedURLException ex) {
             Logger.getLogger(ProductoTemplateController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("no se hallo imagen");
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        if(image == null){
-            icon = new Image(getClass().getResourceAsStream("/resources/images/iconTienda.png"));
-            imgProducto.setImage(icon);
-        }else{
-            imgProducto.setImage(SwingFXUtils.toFXImage(image, null));
-            System.out.println("Se cargo exitosamente la imagen");
+            System.out.println("no se hallo imagen");
         }
     }
 
@@ -290,7 +268,7 @@ public class InfoProductoController implements Initializable {
         Stage stage = new Stage();
         stage.initStyle(StageStyle.DECORATED);
         stage.setScene(new Scene(root));
-        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/iconTienda.png")));
         stage.setTitle("Registrar Producto");
         stage.show();
     }
@@ -320,8 +298,6 @@ public class InfoProductoController implements Initializable {
     }
     public void modificarProv(boolean state){
         btnNuevoProv.setVisible(state);
-        //cboNombreProv.setEditable(state);
-        //cboNombreProv.disabledProperty();
         txtIDProducto.setEditable(state);
         btnNuevoProv.setVisible(state);
         cboNombreProv.setVisible(state);
@@ -337,7 +313,7 @@ public class InfoProductoController implements Initializable {
         txtPrecio.setText(String.valueOf(p.getPrecio()));
         txtIDProducto.setText(p.getIdprducto());
         txtURL.setText(p.getFotoUrl());
-        imgProducto.setImage(new Image(p.getFotoUrl()));
+        imgProducto.setImage(new Image(new File(p.getFotoUrl()).toURI().toString()));
         this.editado = p;
         if(seleccionado.size() == 0){
             seleccionado.add(p.getProveedor());
@@ -350,9 +326,19 @@ public class InfoProductoController implements Initializable {
     }
 
     public void saveToFile(ImageView image) throws IOException {
-        String folderPath = "C:/GitHubVictor/TiendaStonks/TiendaProject/src/resources/productos";
+        String folderPath = "./src/main/resources/productos/";
         File imageFile = new File(folderPath, txtDescripcion.getText() + ".png");
         BufferedImage bImage = SwingFXUtils.fromFXImage(image.getImage(), null);
         ImageIO.write(bImage, "png", imageFile);
+    }
+
+    @FXML
+    void printURL(ActionEvent event) {
+        System.out.println(txtURL.getText());
+        imgProducto.setImage(null);
+        imgProducto.setImage(new Image(getClass().getResourceAsStream("/Images/iconTienda.png")) );
+    }
+    public String getImagePath(){
+        return "./src/main/resources/productos/" + txtDescripcion.getText() + ".png";
     }
 }
