@@ -397,10 +397,10 @@ public class VentasController implements Initializable {
 
     public void  reportPDf() throws IOException, DocumentException {
         String reportName = txtFactura.getText() +".pdf";
-        File file = new File("out/production/TiendaStonks/resources/Reporte/"+reportName);
+        File file = new File("./src/main/resources/Reporte/"+reportName);
         //creacion de documento y tablas
         Document document = new Document();
-        FileOutputStream outputStream = new FileOutputStream("out/production/TiendaStonks/resources/Reporte/"+reportName);
+        FileOutputStream outputStream = new FileOutputStream("./src/main/resources/Reporte/"+reportName);
         PdfWriter.getInstance(document,outputStream);
 
         document.open();
@@ -412,7 +412,7 @@ public class VentasController implements Initializable {
         subTitulo.setSpacingBefore(10);
         subTitulo.setSpacingAfter(20);
         document.add(subTitulo);
-        Image image = Image.getInstance("TiendaProject/src/resources/images/LogoTienda (5).png");
+        Image image = Image.getInstance("src/main/resources/Images/LogoTienda (5).png");
         image.setAlignment(Element.ALIGN_CENTER);
         document.add(image);
         Paragraph date = new Paragraph(new Date().toString());
