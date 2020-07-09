@@ -13,10 +13,7 @@ import Pojo.Producto;
 import Pojo.Proveedor;
 import com.google.gson.Gson;
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -29,16 +26,19 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -53,8 +53,6 @@ public class InfoProductoController implements Initializable {
     @FXML
     private TextField txtIDProducto;
     @FXML
-    private TextField txtIDProveedor;
-    @FXML
     private TextField txtStock;
     @FXML
     private TextField txtPrecio;
@@ -63,21 +61,30 @@ public class InfoProductoController implements Initializable {
     @FXML
     private ComboBox<String> cboNombreProv;
     @FXML
-    private TextField txtapellidoProv;
+    private TableView<Proveedor> tblProveedor;
     @FXML
-    private TextField txtCorreo;
+    private TableColumn<Proveedor, String> columnID;
     @FXML
-    private TextField txtRUC;
+    private TableColumn<Proveedor, String> columnNombre;
     @FXML
-    private TextField txtTelefono;
+    private TableColumn<Proveedor, String> columnApellido;
     @FXML
-    private TextField txtCedula;
+    private TableColumn<Proveedor, String> columnTelefono;
+    @FXML
+    private TableColumn<Proveedor, String> columnRUC;
+    @FXML
+    private TableColumn<Proveedor, String> columnCedula;
+    @FXML
+    private TableColumn<Proveedor, String> columnCorreo;
+    @FXML
+    private Button btnExistente;
+    @FXML
+    private Button btnDescargar;
     @FXML
     private Button btnNuevoProv;
     @FXML
-    private Button btnGuardar;
-    @FXML
-    private Button btnCancelar;
+    private Label lblNombre;
+
     @FXML
     private ImageView imgProducto;
     @FXML
@@ -88,6 +95,14 @@ public class InfoProductoController implements Initializable {
     private ObservableList<String> Nombres = FXCollections.observableArrayList();
     private boolean isEdit;
     private Producto editado;
+    private ObservableList<Proveedor>seleccionado = FXCollections.observableArrayList();
+    private ProveedorData proveedorData = new ProveedorData();
+    private ProductoData productoData = new ProductoData();
+    private BufferedImage image = null;
+    private Image icon = null;
+    private File selectedImage;
+
+
     /**
      * Initializes the controller class.
      */
@@ -95,23 +110,44 @@ public class InfoProductoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             loadData();
+            starColumns();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(InfoProductoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
     
-    private void loadData() throws FileNotFoundException{
-        loadFromGsonProducto();
-        loadFromGsonProveedor();
+    public void loadData() throws FileNotFoundException{
+        proveedorData.loadFromGson();
+        productoData.loadFromGson();
+        prodTemp = FXCollections.observableArrayList(productoData.getProductos());
+        provTemp = FXCollections.observableArrayList(proveedorData.getProveedores());
         llenarItems();
     }    
     @FXML
-    private void btnNuevoProvAction(ActionEvent event) {
-        //llamar al stage de Nuevo Proveedor
+    private void btnNuevoProvAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/ProveedorRegister.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.setTitle("Registrar Proveedor");
+        stage.show();
+        ProveedorRegisterController temp = fxmlLoader.getController();
+        temp.isStageProducto(true);
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 
     @FXML
-    private void btnGuardar_Action(ActionEvent event) throws FileNotFoundException {
+    private void btnGuardar_Action(ActionEvent event) throws IOException {
+        if(txtDescripcion.getText().isEmpty() || txtURL.getText().isEmpty() || txtIDProducto.getText().isEmpty() || txtPrecio.getText().isEmpty() || txtSeccion.getText().isEmpty() || txtStock.getText().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Guardar Producto");
+            a.setContentText("Por Favor Ingrese todos los Datos");
+            a.showAndWait();
+            return;
+        }
+
         if(isEdit){
             for(int i = 0; i < prodTemp.size(); i++){
                 if(prodTemp.get(i).getIdprducto().equals(this.editado.getIdprducto())){
@@ -121,9 +157,14 @@ public class InfoProductoController implements Initializable {
                     prodTemp.get(i).setPrecio(Float.parseFloat(txtPrecio.getText()));
                     prodTemp.get(i).setSeccion(txtSeccion.getText());
                     prodTemp.get(i).setStock(txtStock.getText());
+                    if(txtURL.getText() != prodTemp.get(i).getFotoUrl()){
+                        saveToFile(imgProducto);
+                        String folderPath = "C:/GitHubVictor/TiendaStonks/TiendaProject/src/resources/productos"+txtDescripcion.getText()+".png";
+                        prodTemp.get(i).setFotoUrl(folderPath);
+                    }
                 }   
             }
-            updateProducto();
+            productoData.addToGson(prodTemp);
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Guardar Producto");
             a.setContentText("Se guardo Exitosamente");
@@ -131,14 +172,24 @@ public class InfoProductoController implements Initializable {
             ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         }else{
             Producto nuevo = new Producto();
+            Proveedor datosProv = new Proveedor();
+            datosProv = tblProveedor.getSelectionModel().getSelectedItem();
             nuevo.setDescripcion(txtDescripcion.getText());
-            nuevo.setIdProveedor(cboNombreProv.getSelectionModel().getSelectedItem());
+            nuevo.setIdProveedor(datosProv.getIdProveedor());
             nuevo.setIdprducto(txtIDProducto.getText());
             nuevo.setPrecio(Float.parseFloat(txtPrecio.getText()));
             nuevo.setSeccion(txtSeccion.getText());
             nuevo.setStock(txtStock.getText());
             nuevo.setFotoUrl(txtURL.getText());
-            saveProducto(nuevo);
+            nuevo.setProveedor(datosProv);
+            productoData.saveProducto(nuevo);
+            if(txtURL.getText().isEmpty()){
+                icon = new Image(getClass().getResourceAsStream("/resources/images/iconTienda.png"));
+                imgProducto.setImage(icon);
+                saveToFile(imgProducto);
+            }else{
+                saveToFile(imgProducto);
+            }
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Guardar Producto");
             a.setContentText("Se guardo Exitosamente");
@@ -163,43 +214,26 @@ public class InfoProductoController implements Initializable {
         }
         });
     }
-    
-    private void llenarItems(){
-        Nombres.clear();
-        provTemp.forEach(p -> {
-            Nombres.add(p.getNombreProv());
-        });
-        cboNombreProv.setItems(Nombres);
-    }
-    
+
     @FXML
     private void llenarDatosProv(ActionEvent event){
-        provTemp.stream().filter(p -> (cboNombreProv.getSelectionModel().getSelectedItem().equals(p.getNombreProv()))).map(p -> {
-            txtIDProveedor.setText(p.getIdProveedor());
-            return p;
-        }).map(p -> {
-            txtapellidoProv.setText(p.getApellidoProv());
-            return p;
-        }).map(p -> {
-            txtCorreo.setText(p.getCorreo());
-            return p;
-        }).map(p -> {
-            txtRUC.setText(p.getRuc());
-            return p;
-        }).map(p -> {
-            txtTelefono.setText(p.getTelefono());
-            return p;
-        }).forEachOrdered(p -> {
-            txtCedula.setText(p.getCedula());
-        });
+            for (int i = 0; i < provTemp.size(); i++){
+                if(cboNombreProv.getSelectionModel().getSelectedItem().equals(provTemp.get(i).getNombreProv())){
+                    System.out.println(seleccionado.size() - 1);
+                    if(seleccionado.size() == 0){
+                        seleccionado.add(provTemp.get(i));
+                    }else{
+                        seleccionado.clear();
+                        seleccionado.add(provTemp.get(i));
+                    }
+                }
+            }
+            tblProveedor.setItems(seleccionado);
     }
-    
+
     @FXML
     private void cargarImgProducto(KeyEvent event) throws IOException {
         if(event.getCode().equals(event.getCode().ENTER)){
-            //imgProducto.setImage(new Image(txtURL.getText()));
-            BufferedImage image = null;
-            Image icon = null;
             try {
             image = ImageIO.read(new URL(txtURL.getText()));            
             } catch (MalformedURLException ex) {
@@ -216,16 +250,83 @@ public class InfoProductoController implements Initializable {
             
         }
     }
+
+    @FXML
+    void cargarImagenLocal(ActionEvent event) throws IllegalArgumentException, IOException  {
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG", "*.png"));
+        File selectedImage = fc.showOpenDialog(null);
+        if (selectedImage == null)
+            return;
+        Image img = SwingFXUtils.toFXImage(ImageIO.read(selectedImage), null);
+        imgProducto.setImage(img);
+        txtURL.setText(selectedImage.getPath());
+
+
+    }
+
+    @FXML
+    void descargarImagen(ActionEvent event) {
+        try {
+            image = ImageIO.read(new URL(txtURL.getText()));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ProductoTemplateController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("no se hallo imagen");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(image == null){
+            icon = new Image(getClass().getResourceAsStream("/resources/images/iconTienda.png"));
+            imgProducto.setImage(icon);
+        }else{
+            imgProducto.setImage(SwingFXUtils.toFXImage(image, null));
+            System.out.println("Se cargo exitosamente la imagen");
+        }
+    }
+
+    public void setNewProveedor() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/InfoProducto.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.setTitle("Registrar Producto");
+        stage.show();
+    }
+
+    public void llenarItems(){
+            cboNombreProv.getItems().clear();
+            provTemp.forEach(p -> {
+                cboNombreProv.getItems().add(p.getNombreProv());
+            });
+    }
+
+    public void starColumns(){
+        columnID.setCellValueFactory(new PropertyValueFactory<>("idProveedor"));
+        columnID.setMinWidth(150);
+        columnNombre.setCellValueFactory(new PropertyValueFactory<>("nombreProv"));
+        columnNombre.setMinWidth(150);
+        columnApellido.setCellValueFactory(new PropertyValueFactory<>("apellidoProv"));
+        columnApellido.setMinWidth(150);
+        columnCedula.setCellValueFactory(new PropertyValueFactory<>("cedula"));
+        columnCedula.setMinWidth(150);
+        columnCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+        columnCorreo.setMinWidth(150);
+        columnTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        columnTelefono.setMinWidth(150);
+        columnRUC.setCellValueFactory(new PropertyValueFactory<>("ruc"));
+        columnRUC.setMinWidth(150);
+    }
     public void modificarProv(boolean state){
-        cboNombreProv.setEditable(state);
-        cboNombreProv.disabledProperty();
+        btnNuevoProv.setVisible(state);
+        //cboNombreProv.setEditable(state);
+        //cboNombreProv.disabledProperty();
         txtIDProducto.setEditable(state);
-        txtIDProveedor.setEditable(state);
-        txtapellidoProv.setEditable(state);
-        txtCorreo.setEditable(state);
-        txtRUC.setEditable(state);
-        txtTelefono.setEditable(state);
-        txtCedula.setEditable(state); 
+        btnNuevoProv.setVisible(state);
+        cboNombreProv.setVisible(state);
+        lblNombre.setVisible(state);
+
     }
     public void editProducto(Producto p, boolean state){
         isEdit = true;
@@ -237,71 +338,21 @@ public class InfoProductoController implements Initializable {
         txtIDProducto.setText(p.getIdprducto());
         txtURL.setText(p.getFotoUrl());
         imgProducto.setImage(new Image(p.getFotoUrl()));
-        for(Proveedor prov: provTemp){
-            if(prov.getIdProveedor().equals(p.getIdProveedor())){
-                txtIDProveedor.setText(prov.getIdProveedor());
-                txtapellidoProv.setText(prov.getApellidoProv());
-                txtCorreo.setText(prov.getCorreo());
-                txtRUC.setText(prov.getRuc());
-                txtTelefono.setText(prov.getTelefono());
-                txtCedula.setText(prov.getCedula());
-                cboNombreProv.getSelectionModel().select(prov.getNombreProv());
-            }
-        }
         this.editado = p;
-    }
-  
-    
-    //Gestion de Datos
-    public void loadFromGsonProducto() {
-        Gson gson = new Gson();
-        prodTemp = FXCollections.observableArrayList();
-
-        try {
-            prodTemp.addAll(Arrays.asList(gson.fromJson(new FileReader( getClass().getResource("/resources/Data/productos.json").getPath()), Producto[].class)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if(seleccionado.size() == 0){
+            seleccionado.add(p.getProveedor());
+            tblProveedor.setItems(seleccionado);
+        }else{
+            seleccionado.remove(0);
+            seleccionado.add(p.getProveedor());
+            tblProveedor.setItems(seleccionado);
         }
     }
-    
-    public void loadFromGsonProveedor() {
-        Gson gson = new Gson();
-        provTemp = FXCollections.observableArrayList();
 
-        try {
-            provTemp.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/ProveedorData.json").getPath()), Proveedor[].class)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public  void addToGsonProducto(ObservableList<Producto> newData) {
-        FileWriter flw = null;
-
-        Gson gson = new Gson();
-
-        try {
-            flw = new FileWriter(getClass().getResource("/resources/Data/productos.json").getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-            ObservableList<Producto> jsonArray = newData;
-            gson.toJson(jsonArray, flw);
-
-        try {
-            flw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    
-    public void saveProducto(Producto p) {
-        prodTemp.add(p);
-        addToGsonProducto(prodTemp);
-    }
-    public void updateProducto() {
-        addToGsonProducto(prodTemp);
+    public void saveToFile(ImageView image) throws IOException {
+        String folderPath = "C:/GitHubVictor/TiendaStonks/TiendaProject/src/resources/productos";
+        File imageFile = new File(folderPath, txtDescripcion.getText() + ".png");
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image.getImage(), null);
+        ImageIO.write(bImage, "png", imageFile);
     }
 }

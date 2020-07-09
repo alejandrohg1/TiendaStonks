@@ -1,5 +1,6 @@
 package DataBase;
 
+import Pojo.Producto;
 import Pojo.Proveedor;
 import Pojo.Usuario;
 import com.google.gson.Gson;
@@ -61,11 +62,17 @@ public class ProveedorData {
 
     }
 
+    public void saveProveedor(Proveedor p) {
+        proveedores.add(p);
+        addToGson(proveedores);
+    }
+
     public void updateProveedorList(){
         addToGson(proveedores);
     }
 
     public ObservableList<Proveedor> getProveedores() {
+        loadFromGson();
         return proveedores;
     }
 }

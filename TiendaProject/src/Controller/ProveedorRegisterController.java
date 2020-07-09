@@ -1,7 +1,7 @@
 package Controller;
 
-import DataBase.ProductoData;
 import DataBase.ProveedorData;
+import Pojo.Producto;
 import Pojo.Proveedor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +28,7 @@ public class ProveedorRegisterController implements Initializable {
     private ProveedorData proveedorData = new ProveedorData();
     private static boolean isEdit =false;
     private static Proveedor proveedorEdit;
-
+    private boolean isinStageProducto = false;
 
 
     @Override
@@ -37,17 +37,23 @@ public class ProveedorRegisterController implements Initializable {
     }
 
     public void saveEmpleado(ActionEvent event) throws IOException {
+
         if(isEdit){
-            ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             ProveedoresController provCont = new ProveedoresController();
             editUser(proveedorEdit);
             provCont.updateGson();
         }else{
-            ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-            ProveedoresController proveedoresController = new ProveedoresController();
+
             Proveedor proveedor = new Proveedor(txtNombre.getText(),txtApellido.getText(),txtCedula.getText(),txtCorreo.getText(),txtTelefono.getText(),txtRuc.getText(),txtID.getText());
-            proveedoresController.saveProveedor(proveedor);
+            proveedorData.saveProveedor(proveedor);
+
+            if(isinStageProducto){
+                InfoProductoController temp = new InfoProductoController();
+                temp.setNewProveedor();
+            }
+
         }
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
 
     }
 
@@ -55,7 +61,7 @@ public class ProveedorRegisterController implements Initializable {
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 
-    public  void initData(Proveedor proveedor,boolean state){
+    public  void initData(Proveedor proveedor, boolean state){
         txtID.setText(proveedor.getIdProveedor());
         txtNombre.setText(proveedor.getNombreProv());
         txtApellido.setText(proveedor.getApellidoProv());
@@ -79,5 +85,9 @@ public class ProveedorRegisterController implements Initializable {
 
     public Button getButtonGuardar() {
         return buttonGuardar;
+    }
+
+    public void isStageProducto(boolean state){
+        isinStageProducto = state;
     }
 }

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="gson-2.8.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../NetBeans/Cosas de Java/jars varios/gson-2.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../NetBeans/Cosas de Java/jars varios/fxsampler-1.0.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../NetBeans/Cosas de Java/jars varios/controlsfx-samples-8.40.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../NetBeans/Cosas de Java/jars varios/AnimateFX-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../NetBeans/Cosas de Java/jars varios/controlsfx-8.40.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../NetBeans/Cosas de Java/jars varios/controlsfx-samples-8.40.14.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -17,21 +17,23 @@
         <URL value="@/Styles/productoscene.css" />
     </stylesheets>
    <children>
-      <Pane layoutY="31.0" prefHeight="141.0" prefWidth="1075.0" style="-fx-background-color: #9229f5;" AnchorPane.bottomAnchor="561.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0">
+      <Pane layoutY="31.0" prefHeight="141.0" prefWidth="1075.0" style="-fx-background-color: #FF0040;" AnchorPane.bottomAnchor="561.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0">
          <children>
             <ImageView fitHeight="80.0" fitWidth="92.0" layoutX="31.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/images/shopping-basket_icon-icons.png" />
                </image>
             </ImageView>
-            <Label layoutX="129.0" layoutY="54.0" prefHeight="22.0" prefWidth="113.0" text="Productos" textFill="WHITE">
+            <Label layoutX="129.0" layoutY="54.0" prefHeight="53.0" prefWidth="188.0" text="Productos" textFill="WHITE">
                <font>
-                  <Font size="25.0" />
+                  <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <Button layoutX="856.0" layoutY="97.0" mnemonicParsing="false" onAction="#btnNuevoProducto_Action" prefHeight="31.0" prefWidth="199.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Nuevo Articulo" />
-            <Button fx:id="btnBuscar" layoutX="856.0" layoutY="11.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="199.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Buscar" />
-            <Button layoutX="855.0" layoutY="53.0" mnemonicParsing="false" onAction="#refrescar" prefHeight="31.0" prefWidth="199.0" styleClass="button3" stylesheets="@../Styles/button.css" text="Refrescar" />
+            <Label layoutX="780.0" layoutY="90.0" text="Control de Productos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Label layoutX="14.0" layoutY="6.0" text="Get more, Pay Less ♥" />
@@ -46,11 +48,11 @@
             </ImageView>
          </graphic>
       </Button>
-      <AnchorPane id="AnchorPane" layoutY="174.0" prefHeight="559.0" prefWidth="1075.0">
+      <AnchorPane id="AnchorPane" layoutY="174.0" prefHeight="481.0" prefWidth="1075.0">
          <children>
             <ScrollPane fx:id="scrollPaneContent" fitToHeight="true" fitToWidth="true" prefHeight="475.0" prefWidth="697.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <FlowPane fx:id="flowPaneProducts" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" prefHeight="510.0" prefWidth="1073.0" style="-fx-background-color: #D3D3D3;" vgap="10.0">
+                  <FlowPane fx:id="flowPaneProducts" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="10.0" orientation="VERTICAL" prefHeight="475.0" prefWidth="1073.0" style="-fx-background-color: #D3D3D3;" vgap="10.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -59,5 +61,13 @@
             </ScrollPane>
          </children>
       </AnchorPane>
+      <Button fx:id="btnBuscar" layoutX="101.0" layoutY="678.0" mnemonicParsing="false" onAction="#buscarProd" prefHeight="31.0" prefWidth="199.0" style="-fx-background-color: #FF0040;" text="Buscar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
+      <Button layoutX="745.0" layoutY="677.0" mnemonicParsing="false" onAction="#btnNuevoProducto_Action" prefHeight="31.0" prefWidth="199.0" style="-fx-background-color: #FF0040;" text="Nuevo Articulo" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>

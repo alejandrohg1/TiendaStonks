@@ -48,8 +48,7 @@ public class ProductoController implements Initializable {
     private Button btnBuscar;
 
     public static ObservableList<Producto> productoObservableList;
-    public ProductoData prodData;
-
+    private ProductoData productoData = new ProductoData();
     
     
     @Override
@@ -62,7 +61,8 @@ public class ProductoController implements Initializable {
     }
     
     public void loadData() throws FileNotFoundException{
-        loadFromGson();
+        productoData.loadFromGson();
+        productoObservableList = FXCollections.observableArrayList(productoData.getProductos());
         flowPaneProducts.getChildren().clear();
         for(Producto p : productoObservableList){
             try
@@ -82,15 +82,6 @@ public class ProductoController implements Initializable {
     }
     
      @FXML
-    private void refrescar(ActionEvent event) {
-        try {
-            loadData();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-     @FXML
     private void btnNuevoProducto_Action(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/InfoProducto.fxml"));
         Parent root = (Parent) fxmlLoader.load();
@@ -101,19 +92,22 @@ public class ProductoController implements Initializable {
         stage.setTitle("Registrar Producto");
         stage.show();
     }
+
+    @FXML
+    void buscarProd(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/ProductoTable.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("resources/images/iconTienda.png"));
+        stage.setTitle("Buscar Producto");
+        stage.show();
+
+    }
     
     @FXML
     public void closeWindow(ActionEvent event) {
        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-    }
-    
-    public void loadFromGson() {
-        Gson gson = new Gson();
-        productoObservableList = FXCollections.observableArrayList();
-        try {
-            productoObservableList.addAll(Arrays.asList(gson.fromJson(new FileReader(getClass().getResource("/resources/Data/productos.json").getPath()), Producto[].class)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

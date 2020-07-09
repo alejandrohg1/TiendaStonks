@@ -73,8 +73,6 @@ public class ProveedoresController implements Initializable {
         proveedors = FXCollections.observableArrayList(proveedorData.getProveedores());
         starColumns();
         filterTextField();
-
-
     }
 
 
@@ -119,7 +117,6 @@ public class ProveedoresController implements Initializable {
     }
 
     public void filterTextField() {
-
         FilteredList<Proveedor> filteredUsuarios = new FilteredList<>(proveedors);
         txtProveedor.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredUsuarios.setPredicate((Predicate<? super Proveedor>) user -> {
@@ -151,7 +148,6 @@ public class ProveedoresController implements Initializable {
         SortedList<Proveedor> sortedList = new SortedList<>(filteredUsuarios);
         sortedList.comparatorProperty().bind(tblProveedores.comparatorProperty());
         tblProveedores.setItems(sortedList);
-
     }
 
     public void registerUser(ActionEvent event) throws IOException {
@@ -287,5 +283,11 @@ public class ProveedoresController implements Initializable {
         return productos;
 
 
+    }
+
+    @FXML
+    void probar(ActionEvent event) {
+        String folderPath = System.getProperty("/resources/productos");
+        System.out.println(folderPath);
     }
 }

@@ -24,7 +24,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import net.sf.jasperreports.engine.JRException;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -331,7 +330,7 @@ public class VentasController implements Initializable {
         productosFactura.clear();
     }
 
-    public void saveFactura(ActionEvent event) throws JRException, IOException, DocumentException {
+    public void saveFactura(ActionEvent event) throws IOException, DocumentException {
         Factura factura = new Factura();
         if(txtPrecio.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
