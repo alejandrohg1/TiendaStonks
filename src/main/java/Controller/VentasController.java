@@ -384,7 +384,7 @@ public class VentasController implements Initializable {
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Factura Guardada");
-                alert.setContentText("Se guardo la Factura en "+"out/production/TiendaStonks/resources/Reporte/"+txtFactura.getText()+"pdf");
+                alert.setContentText("Se guardo la Factura en "+"src/main/resources/Reporte/"+txtFactura.getText()+"pdf");
                 alert.show();
 
         }
