@@ -67,7 +67,6 @@
          </top>
       </BorderPane>
       <Button layoutX="888.0" layoutY="686.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" styleClass="button1" stylesheets="@../Styles/button.css" text="Volver Al Login" />
-      <Button layoutX="751.0" layoutY="686.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" styleClass="button1" stylesheets="@../Styles/button.css" text="Mostrar Factura" />
 
    </children>
 
